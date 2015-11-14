@@ -11,4 +11,5 @@
     <string name="title_activity_cal">Cal</string>
     <string name="title_activity_notes">Notes</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login__reg">Login_Reg</string>
 </resources>

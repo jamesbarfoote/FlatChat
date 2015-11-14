@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Intent loginAct = new Intent(this, Login_Reg.class);
+        startActivity(loginAct);
         Log.v("", "Created");
         Button sendB = (Button)findViewById(R.id.btn_Send);
 

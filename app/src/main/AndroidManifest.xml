@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.barfoote.james.flatchatapp" >
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -31,6 +32,11 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" >
+        </activity>
+        <activity
+            android:name=".Login_Reg"
+            android:label="@string/title_activity_login__reg"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
 
