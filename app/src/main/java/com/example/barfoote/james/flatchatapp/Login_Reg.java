@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class Login_Reg extends AppCompatActivity {
     private EditText emailField,passwordField;
@@ -63,17 +64,26 @@ public class Login_Reg extends AppCompatActivity {
     {
         this.status = res;
         this.finished = finished;
-
+Log.d("Result", res);
         if (res.equals("  Login Successful")) {
             //Login successful
+            Toast.makeText(getApplicationContext(), "Login Successful",
+                    Toast.LENGTH_LONG).show();
             Intent main = new Intent(this, MainActivity.class);
             startActivity(main);
         }
-        else if(res.equals("  success"))
+        else if(res.equals("success"))
         {
             //Register successful
+            Toast.makeText(getApplicationContext(), "Registration successful",
+                    Toast.LENGTH_LONG).show();
             Intent main = new Intent(this, MainActivity.class);
             startActivity(main);
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), "Username/password incorrect OR user already exists",
+                    Toast.LENGTH_LONG).show();
         }
     }
 

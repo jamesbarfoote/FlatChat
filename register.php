@@ -5,12 +5,12 @@
   define('DB','u205845314_db');
   $con = mysqli_connect(HOST,USER,PASS,DB);
   
-   $name = $_POST['name'];
-  $address = $_POST['address'];
+   $email = $_POST['email'];
+  $password = $_POST['password'];
   
   
 
-  $sql = "insert into Persons (name,address) values ('$name','$address')";
+  $sql = "insert into Person (email,password) values ('$email','$password')";
   if(mysqli_query($con,$sql)){
     echo 'success';
   }

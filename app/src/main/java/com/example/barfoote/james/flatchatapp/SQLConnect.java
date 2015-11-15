@@ -44,7 +44,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                         .add("password", password)
                         .build();
                 Request request = new Request.Builder()
-                        .url("http://jamesbarfoote.16mb.com/insert-db.php")
+                        .url("http://jamesbarfoote.16mb.com/register.php")
                         .post(formBody)
                         .build();
 
