@@ -51,15 +51,6 @@ public class Login_Reg extends AppCompatActivity {
         String username = emailField.getText().toString();
         String password = passwordField.getText().toString();
         new SQLConnect(this,status,role,1).execute(username,password);
-        while(finished != true) {
-            if (this.status.equals("Login Successful")) {
-                //Login successful
-                Log.d("Login result", "" + this.status);
-                Intent main = new Intent(this, MainActivity.class);
-                startActivity(main);
-            }
-        }
-
     }
 
     public void register(){//Register user
@@ -70,9 +61,20 @@ public class Login_Reg extends AppCompatActivity {
 
     public void setResult(String res, boolean finished)
     {
-        Log.d("Result", res);
         this.status = res;
         this.finished = finished;
+
+        if (res.equals("  Login Successful")) {
+            //Login successful
+            Intent main = new Intent(this, MainActivity.class);
+            startActivity(main);
+        }
+        else if(res.equals("  success"))
+        {
+            //Register successful
+            Intent main = new Intent(this, MainActivity.class);
+            startActivity(main);
+        }
     }
 
 }

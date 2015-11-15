@@ -66,7 +66,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                 return new String("Exception: " + e.getMessage());
             }
         }
-        else{//Get
+        else{//login
             try{
                 String username = (String)arg0[0];
                 String password = (String)arg0[1];
@@ -76,7 +76,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                         .add("password", password)
                         .build();
                 Request request = new Request.Builder()
-                        .url("http://jamesbarfoote.16mb.com/getData.php")
+                        .url("http://jamesbarfoote.16mb.com/login.php")
                         .post(formBody)
                         .build();
 
@@ -103,13 +103,8 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String result){
-        context.setResult("Login Successful", true);
+        context.setResult(result, true);
         this.statusField = "Login Successful";
         this.roleField = result;
     }
-
-//    public String get()
-//    {
-//        return statusField;
-//    }
 }
