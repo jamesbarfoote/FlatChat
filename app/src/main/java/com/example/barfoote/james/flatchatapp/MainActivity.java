@@ -23,14 +23,20 @@ public class MainActivity extends AppCompatActivity {
     private Handler handler = new Handler();
     public ListView msgView;
     public ArrayAdapter<String> msgList;
+    DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent loginAct = new Intent(this, Login_Reg.class);
-        startActivity(loginAct);
-        Log.v("", "Created");
+        dbHelper = new DBHelper(this);
+
+        //If there are no users in the local database then call the sign-in activity
+        if(dbHelper.getAllUsers().getCount() < 1) {
+            Intent loginAct = new Intent(this, Login_Reg.class);
+            startActivity(loginAct);
+        }
+
         Button sendB = (Button)findViewById(R.id.btn_Send);
 
         msgView = (ListView) findViewById(R.id.listView);

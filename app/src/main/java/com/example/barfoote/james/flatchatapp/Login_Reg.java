@@ -14,6 +14,13 @@ public class Login_Reg extends AppCompatActivity {
     private EditText emailField,passwordField;
     private String status = "";
     private String role = "";
+    DBHelper dbHelper;
+    private String email = "";
+    private int userID;
+    private byte[] pic;
+    private String group;
+
+
     private boolean finished = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,18 +64,36 @@ public class Login_Reg extends AppCompatActivity {
     public void register(){//Register user
         String username = emailField.getText().toString();
         String password = passwordField.getText().toString();
-        new SQLConnect(this,status,role, 0).execute(username,password);
+        new SQLConnect(this,status,role, 0).execute(username, password);
     }
 
-    public void setResult(String res, boolean finished)
+    public void setResult(String res,String info, int byGetOrPost)
     {
+        //byGetOrPost = 0 means register
+
         this.status = res;
-        this.finished = finished;
-Log.d("Result", res);
+        Log.d("Result", res);
         if (res.equals("  Login Successful")) {
             //Login successful
             Toast.makeText(getApplicationContext(), "Login Successful",
                     Toast.LENGTH_LONG).show();
+
+            //Parse res to get all the user information (id, email, group, pic)
+
+            //Add user to user database
+            dbHelper = new DBHelper(this);
+
+            if(byGetOrPost == 0)
+            {
+                parseRegister(res);
+                dbHelper.insertUser(userID, email, "", null);
+            }
+            else
+            {
+                parseLogin(res);
+                dbHelper.insertUser(this.userID, this.email, this.group, this.pic);
+            }
+
             Intent main = new Intent(this, MainActivity.class);
             startActivity(main);
         }
@@ -86,5 +111,16 @@ Log.d("Result", res);
                     Toast.LENGTH_LONG).show();
         }
     }
+
+    public void parseRegister(String res)
+    {
+
+    }
+
+    public void parseLogin(String res)
+    {
+
+    }
+
 
 }

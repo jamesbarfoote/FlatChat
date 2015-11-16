@@ -18,6 +18,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
     private String statusField,roleField;
     private Login_Reg context;
     private int byGetOrPost = 0;
+    private String username = "";
 
     //flag 0 means get and 1 means post.(By default it is get.)
     public SQLConnect(Login_Reg context,String statusField,String roleField,int flag) {
@@ -33,10 +34,10 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
 
     @Override
     protected String doInBackground(String... arg0) {
-        if(byGetOrPost == 0){ //means by Post Method
+        if(byGetOrPost == 0){ //Register a user
 
-            try{
-                String username = (String)arg0[0];
+            try{//Register
+                this.username = (String)arg0[0];
                 String password = (String)arg0[1];
                 OkHttpClient client = new OkHttpClient();
                 RequestBody formBody = new FormEncodingBuilder()
@@ -68,7 +69,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
         }
         else{//login
             try{
-                String username = (String)arg0[0];
+                this.username = (String)arg0[0];
                 String password = (String)arg0[1];
                 OkHttpClient client = new OkHttpClient();
                 RequestBody formBody = new FormEncodingBuilder()
@@ -103,7 +104,15 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String result){
-        context.setResult(result, true);
+        String info = "";
+        //Break the result up into 2 pieces (result of the query and the user info)
+
+        if(byGetOrPost == 0)
+        {
+            info = username;
+        }
+
+        context.setResult(result, info, byGetOrPost);
         this.statusField = "Login Successful";
         this.roleField = result;
     }
