@@ -10,6 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Login_Reg extends AppCompatActivity {
     private EditText emailField,passwordField;
     private String status = "";
@@ -17,8 +20,9 @@ public class Login_Reg extends AppCompatActivity {
     DBHelper dbHelper;
     private String email = "";
     private int userID;
-    private byte[] pic;
+    private String pic;
     private String group;
+    private ArrayList<String> infoList = new ArrayList<String>();
 
 
     private boolean finished = false;
@@ -71,27 +75,27 @@ public class Login_Reg extends AppCompatActivity {
     {
         //byGetOrPost = 0 means register
 
+        this.infoList.addAll(Arrays.asList(res.split(",")));
+
         this.status = res;
-        Log.d("Result", res);
-        if (res.equals("  Login Successful")) {
+        Log.d("Res", res);
+        if (infoList.get(0).equals("  successL")) {
             //Login successful
             Toast.makeText(getApplicationContext(), "Login Successful",
                     Toast.LENGTH_LONG).show();
 
             //Parse res to get all the user information (id, email, group, pic)
-
             //Add user to user database
             dbHelper = new DBHelper(this);
-
-            if(byGetOrPost == 0)
+            if(byGetOrPost == 0)//register
             {
-                parseRegister(res);
-                dbHelper.insertUser(userID, email, "", null);
+                this.email = info;
+                dbHelper.insertUser(0, email, null, "");
             }
-            else
+            else if(byGetOrPost == 1)//login
             {
                 parseLogin(res);
-                dbHelper.insertUser(this.userID, this.email, this.group, this.pic);
+                dbHelper.insertUser(this.userID, this.email, this.pic, this.group);
             }
 
             Intent main = new Intent(this, MainActivity.class);
@@ -112,13 +116,14 @@ public class Login_Reg extends AppCompatActivity {
         }
     }
 
-    public void parseRegister(String res)
-    {
-
-    }
 
     public void parseLogin(String res)
     {
+        //need to parse ID, email, group, pic
+        this.userID = Integer.parseInt(this.infoList.get(1));
+        this.email = this.infoList.get(2).replaceAll("\\s", "");
+        this.pic = this.infoList.get(3).replaceAll("\\s", "");
+        this.group = this.infoList.get(4).replaceAll("\\s","");
 
     }
 

@@ -17,7 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String USER_COLUMN_ID = "_id";
     public static final String USER_COLUMN_USER_ID = "userID";
     public static final String USER_COLUMN_EMAIL = "email";
-    public static final String USER_COLUMN_GROUP = "group";
+    public static final String USER_COLUMN_FLAT_GROUP = "flatgroup";
     public static final String USER_COLUMN_PICTURE = "pic";
 
     public DBHelper(Context context) {
@@ -30,8 +30,8 @@ public class DBHelper extends SQLiteOpenHelper {
                         USER_COLUMN_ID + " INTEGER PRIMARY KEY, " +
                         USER_COLUMN_USER_ID + " INTEGER, " +
                         USER_COLUMN_EMAIL + " TEXT, " +
-                        USER_COLUMN_GROUP + " TEXT," +
-                        USER_COLUMN_PICTURE + " BLOB)"
+                        USER_COLUMN_PICTURE + " TEXT," +
+                        USER_COLUMN_FLAT_GROUP + " TEXT" + ")"
         );
     }
 
@@ -41,24 +41,25 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertUser(int userID, String email, String group, byte[] pic) {
+    public boolean insertUser(int userID, String email, String pic, String flatGroup) {
+
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(USER_COLUMN_USER_ID, userID);
         contentValues.put(USER_COLUMN_EMAIL, email);
-        contentValues.put(USER_COLUMN_GROUP, group);
         contentValues.put(USER_COLUMN_PICTURE, pic);
+        contentValues.put(USER_COLUMN_FLAT_GROUP, flatGroup);
         db.insert(USER_TABLE_NAME, null, contentValues);
         return true;
     }
 
-    public boolean updatePerson(Integer id, int userID, String email, String group, byte[] pic) {
+    public boolean updatePerson(Integer id, int userID, String email, String pic, String flatGroup) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(USER_COLUMN_USER_ID, userID);
         contentValues.put(USER_COLUMN_EMAIL, email);
-        contentValues.put(USER_COLUMN_GROUP, group);
         contentValues.put(USER_COLUMN_PICTURE, pic);
+        contentValues.put(USER_COLUMN_FLAT_GROUP, flatGroup);
         db.update(USER_TABLE_NAME, contentValues, USER_COLUMN_ID + " = ? ", new String[]{Integer.toString(id)});
         return true;
     }
@@ -80,6 +81,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.delete(USER_TABLE_NAME,
                 USER_COLUMN_ID + " = ? ",
                 new String[] { Integer.toString(id) });
+    }
+
+    public void clearTable()   {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(USER_TABLE_NAME, null,null);
     }
 
 }

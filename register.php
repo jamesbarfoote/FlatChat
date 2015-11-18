@@ -10,7 +10,7 @@
   
   
 
-  $sql = "insert into Person (email,password) values ('$email','$password')";
+  $sql = "insert into Users (email,password) values ('$email','$password')";
   if(mysqli_query($con,$sql)){
     echo 'success';
   }

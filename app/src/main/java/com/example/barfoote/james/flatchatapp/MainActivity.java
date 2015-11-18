@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,11 +31,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dbHelper = new DBHelper(this);
-
+        //dbHelper.clearTable();
         //If there are no users in the local database then call the sign-in activity
         if(dbHelper.getAllUsers().getCount() < 1) {
             Intent loginAct = new Intent(this, Login_Reg.class);
             startActivity(loginAct);
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), "Already logged in",
+                    Toast.LENGTH_LONG).show();
         }
 
         Button sendB = (Button)findViewById(R.id.btn_Send);
@@ -100,8 +106,9 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-        if (id == R.id.action_login) {
-            startActivity(new Intent(this, LoginActivity.class));
+        if (id == R.id.action_logout) {
+            dbHelper.clearTable();
+            startActivity(new Intent(this, Login_Reg.class));
             return true;
         }
 
