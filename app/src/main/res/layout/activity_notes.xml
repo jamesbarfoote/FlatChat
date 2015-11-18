@@ -16,6 +16,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:text="t" />
+        android:id="@+id/notesEditText"
+        android:inputType="textCapSentences|textAutoCorrect"
+        android:imeOptions="actionSend" />
 </LinearLayout>
