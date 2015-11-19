@@ -56,5 +56,7 @@ public class NotesActivity extends ListActivity {
         editText.setText("");
         listItems.add(text);
         adapter.notifyDataSetChanged();
+
+        //call sql and add into the notes column of the group
     }
 }
