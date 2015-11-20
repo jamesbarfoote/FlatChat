@@ -43,6 +43,24 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
 
+        //int userID = dbHelper.getUserID(0);
+
+      //  dbHelper.getRandom();
+
+//        Log.d("UserID", "" + dbHelper.getUser(1).getString(0));
+        String groupJoined = dbHelper.getGroup();
+        Log.d("Group", groupJoined);
+        if(groupJoined.equals("") || groupJoined.equals("<br>"))
+        {
+            Intent loggroup = new Intent(this, GroupLogin.class);
+            startActivity(loggroup);
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), "Already in group",
+                    Toast.LENGTH_LONG).show();
+        }
+
         Button sendB = (Button)findViewById(R.id.btn_Send);
 
         msgView = (ListView) findViewById(R.id.listView);

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by James on 11/17/2015.
@@ -70,6 +71,35 @@ public class DBHelper extends SQLiteOpenHelper {
                 USER_COLUMN_ID + "=?", new String[] { Integer.toString(id) } );
         return res;
     }
+
+    public String getGroup()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + USER_TABLE_NAME;
+        Cursor  cursor = db.rawQuery(query,null);
+        if (cursor.moveToFirst()) {
+            Log.d("in if", "");
+                return cursor.getString(cursor.getColumnIndex("flatgroup"));
+
+        }
+        return "";
+    }
+
+    public int getUserID(int id)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor userC = db.rawQuery("SELECT userID FROM " + USER_TABLE_NAME + " WHERE " +
+                USER_COLUMN_ID + "=?", new String[] { Integer.toString(id) });
+
+        return userC.getInt(0);
+    }
+
+//    public Cursor getGroup(int id) {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor res = db.rawQuery( "SELECT flatgroup FROM " + USER_TABLE_NAME + " WHERE " +
+//                USER_COLUMN_ID + "=?", new String[] { Integer.toString(id) } );
+//        return res;
+//    }
     public Cursor getAllUsers() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery( "SELECT * FROM " + USER_TABLE_NAME, null );

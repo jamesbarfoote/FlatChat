@@ -62,6 +62,9 @@ public class Login_Reg extends AppCompatActivity {
     public void login(){//Get user
         String username = emailField.getText().toString();
         String password = passwordField.getText().toString();
+        Log.d("User", username);
+        Log.d("pass", password);
+
         new SQLConnect(this,status,role,1).execute(username,password);
     }
 
