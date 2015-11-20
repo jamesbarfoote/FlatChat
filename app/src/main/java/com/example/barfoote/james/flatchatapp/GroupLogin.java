@@ -59,16 +59,16 @@ public class GroupLogin extends AppCompatActivity {
         }
     };
 
-    public void login(){//Get user
-        String username = nameField.getText().toString();
+    public void login(){//Get group
+        String name = nameField.getText().toString();
         String password = passwordField.getText().toString();
-        new SQLConnect(this,status,role,1).execute(username,password);
+        new SQLConnect(this,status,role,2).execute(name,password);
     }
 
-    public void register(){//Register user
-        String username = nameField.getText().toString();
+    public void register(){//Register group
+        String name = nameField.getText().toString();
         String password = passwordField.getText().toString();
-        new SQLConnect(this,status,role, 0).execute(username, password);
+        new SQLConnect(this,status,role, 3).execute(name, password);
     }
 
     public void setResult(String res,String info, int byGetOrPost)

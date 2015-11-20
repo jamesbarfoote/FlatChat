@@ -75,7 +75,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                 return new String("Exception: " + e.getMessage());
             }
         }
-        else{//login
+        else if(byGetOrPost == 1){//login
             try{
                 this.username = (String)arg0[0];
                 String password = (String)arg0[1];
@@ -104,6 +104,72 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                 Log.d("Result of login ", sb.toString());
                 return sb.toString();
             }
+            catch(Exception e){
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+        else if(byGetOrPost == 2){//login to group
+            try{
+                this.username = (String)arg0[0];
+                String password = (String)arg0[1];
+                OkHttpClient client = new OkHttpClient();
+                RequestBody formBody = new FormEncodingBuilder()
+                        .add("name", username)
+                        .add("password", password)
+                        .build();
+                Request request = new Request.Builder()
+                        .url("http://jamesbarfoote.16mb.com/groupLogin.php")
+                        .post(formBody)
+                        .build();
+
+                Response response = client.newCall(request).execute();
+                BufferedReader in = new BufferedReader(new InputStreamReader(response.body().byteStream()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line="";
+
+                while ((line = in.readLine()) != null) {
+
+                    sb.append(line);
+                    break;
+                }
+                in.close();
+                Log.d("Result of login ", sb.toString());
+                return sb.toString();
+            }
+            catch(Exception e){
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+        else{ //Register a group
+
+            try{//Register
+                this.username = (String)arg0[0];
+                String password = (String)arg0[1];
+                OkHttpClient client = new OkHttpClient();
+                RequestBody formBody = new FormEncodingBuilder()
+                        .add("name", username)
+                        .add("password", password)
+                        .build();
+                Request request = new Request.Builder()
+                        .url("http://jamesbarfoote.16mb.com/groupRegister.php")
+                        .post(formBody)
+                        .build();
+
+                Response response = client.newCall(request).execute();
+                BufferedReader in = new BufferedReader(new InputStreamReader(response.body().byteStream()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line="";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                    break;
+                }
+                in.close();
+                return sb.toString();
+            }
+
             catch(Exception e){
                 return new String("Exception: " + e.getMessage());
             }
