@@ -2,6 +2,7 @@ package com.example.barfoote.james.flatchatapp; /**
  * Created by James on 11/14/2015.
  */
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -16,12 +17,19 @@ import java.io.InputStreamReader;
 
 public class SQLConnect  extends AsyncTask<String,Void,String> {
     private String statusField,roleField;
-    private Login_Reg context;
+    private Context context;
     private int byGetOrPost = 0;
     private String username = "";
 
     //flag 0 means get and 1 means post.(By default it is get.)
     public SQLConnect(Login_Reg context,String statusField,String roleField,int flag) {
+        this.context = context;
+        this.statusField = statusField;
+        this.roleField = roleField;
+        byGetOrPost = flag;
+    }
+
+    public SQLConnect(GroupLogin context,String statusField,String roleField,int flag) {
         this.context = context;
         this.statusField = statusField;
         this.roleField = roleField;
@@ -112,7 +120,15 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
             info = username;
         }
 
-        context.setResult(result, info, byGetOrPost);
+        if(context instanceof Login_Reg){
+            Login_Reg lr = (Login_Reg)context;
+            lr.setResult(result, info, byGetOrPost);
+        }
+        else if(context instanceof GroupLogin){
+            GroupLogin gl = (GroupLogin)context;
+            gl.setResult(result, info, byGetOrPost);
+        }
+        //context.setResult(result, info, byGetOrPost);
         this.statusField = "Login Successful";
         this.roleField = result;
     }
