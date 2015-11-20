@@ -79,7 +79,7 @@ public class GroupLogin extends AppCompatActivity {
 
         this.status = res;
         Log.d("Res", res);
-        if (infoList.get(0).equals("  successL")) {
+        if (infoList.get(0).equals("successGR")) {
             //Login successful
             Toast.makeText(getApplicationContext(), "Login Successful",
                     Toast.LENGTH_LONG).show();
