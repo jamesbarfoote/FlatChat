@@ -21,6 +21,18 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String USER_COLUMN_FLAT_GROUP = "flatgroup";
     public static final String USER_COLUMN_PICTURE = "pic";
 
+    public static final String FLATGROUP_TABLE_NAME = "fgroup";
+    public static final String FLATGROUP_COLUMN_ID = "_id";
+    public static final String FLATGROUP_COLUMN_GROUP_ID = "groupID";
+    public static final String FLATGROUP_COLUMN_GROUP_NAME = "groupName";
+    public static final String FLATGROUP_COLUMN_SHOPPINGLIST = "shoppingList";
+    public static final String FLATGROUP_COLUMN_CALENDAR = "calendar";
+    public static final String FLATGROUP_COLUMN_MONEY= "groupName";
+    public static final String FLATGROUP_COLUMN_TODO_LIST= "todoList";
+    public static final String FLATGROUP_COLUMN_OWNER_ID= "ownerID";
+
+
+
     public DBHelper(Context context) {
         super(context, DATABASE_NAME , null, DATABASE_VERSION);
     }
@@ -112,6 +124,24 @@ public class DBHelper extends SQLiteOpenHelper {
                 USER_COLUMN_ID + " = ? ",
                 new String[] { Integer.toString(id) });
     }
+
+    public boolean insertGroup(int group_id, String groupName, String shoppingList, String calendar, String money, String todoList, int ownerID)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(FLATGROUP_TABLE_NAME, group_id);
+        contentValues.put(FLATGROUP_COLUMN_GROUP_ID, group_id);
+        contentValues.put(FLATGROUP_COLUMN_GROUP_NAME, groupName);
+        contentValues.put(FLATGROUP_COLUMN_SHOPPINGLIST, shoppingList);
+        contentValues.put(FLATGROUP_COLUMN_CALENDAR, calendar);
+        contentValues.put(FLATGROUP_COLUMN_MONEY, money);
+        contentValues.put(FLATGROUP_COLUMN_TODO_LIST, todoList);
+        contentValues.put(FLATGROUP_COLUMN_OWNER_ID, ownerID);
+        db.insert(USER_TABLE_NAME, null, contentValues);
+        return true;
+    }
+
+
 
     public void clearTable()   {
         SQLiteDatabase db = this.getWritableDatabase();

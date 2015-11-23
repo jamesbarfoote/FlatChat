@@ -91,14 +91,18 @@ public class GroupLogin extends AppCompatActivity {
             dbHelper = new DBHelper(this);
             if(byGetOrPost == 0)//register
             {
-                this.email = info;
-                dbHelper.insertGroup(0, email, null, "");
+                this.groupName = info;
+                dbHelper.insertGroup(0, this.groupName, "", "", "", "", this.ownerID);
+                //Add group to user
+
                 //Also add to the online version of the database
+
             }
             else if(byGetOrPost == 1)//login
             {
                 parseLogin(res);
                 dbHelper.insertGroup(this.group_id, this.groupName, this.shoppingList, this.calendar, this.money, this.todoList, this.ownerID);
+                //Add group to user
             }
 
             Intent main = new Intent(this, MainActivity.class);
