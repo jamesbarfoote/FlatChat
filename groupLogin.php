@@ -17,7 +17,7 @@ $sql = "SELECT GROUP_ID, SHOPPINGLIST, CALENDAR, MONEY, TODO, OWNER_ID FROM Flat
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-        echo "successL," . $row["GROUP_ID"]. 
+        echo "successLG," . $row["GROUP_ID"]. 
 		"," . $row["SHOPPINGLIST"].
 		"," . $row["CALENDAR"].
 		"," . $row["TODO"].

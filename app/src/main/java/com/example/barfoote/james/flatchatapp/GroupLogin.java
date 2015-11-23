@@ -78,10 +78,10 @@ public class GroupLogin extends AppCompatActivity {
         //byGetOrPost = 0 means register
 
         this.infoList.addAll(Arrays.asList(res.split(",")));
-
+        Log.d("First item", "a" + this.infoList.get(0) + "b");
         this.status = res;
         Log.d("Res", res);
-        if (infoList.get(0).equals("successGR")) {
+        if (infoList.get(0).equals("  successLG")) {
             //Login successful
             Toast.makeText(getApplicationContext(), "Login Successful",
                     Toast.LENGTH_LONG).show();
@@ -128,6 +128,7 @@ public class GroupLogin extends AppCompatActivity {
     {
         //need to parse Group_ID, Group_name, shoppinglist, calendar, money, todoList, owner_id
         this.group_id = Integer.parseInt(this.infoList.get(1));
+        Log.d("Group id","" + group_id);
         this.groupName = this.infoList.get(2).replaceAll("\\s", "");
         this.shoppingList = this.infoList.get(3).replaceAll("\\s", "");
         this.calendar = this.infoList.get(4).replaceAll("\\s","");

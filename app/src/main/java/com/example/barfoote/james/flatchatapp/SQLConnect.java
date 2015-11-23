@@ -114,7 +114,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                 String password = (String)arg0[1];
                 OkHttpClient client = new OkHttpClient();
                 RequestBody formBody = new FormEncodingBuilder()
-                        .add("name", username)
+                        .add("GROUP_NAME", username)
                         .add("password", password)
                         .build();
                 Request request = new Request.Builder()
