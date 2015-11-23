@@ -18,14 +18,16 @@ public class GroupLogin extends AppCompatActivity {
     private String status = "";
     private String role = "";
     DBHelper dbHelper;
-    private String email = "";
-    private int userID;
-    private String pic;
-    private String group;
+    //Group_ID, Group_name, shoppinglist, calendar, money, todoList, owner_id
+    int group_id;
+    String groupName = "";
+    String shoppingList = "";
+    String calendar = "";
+    String money = "";
+    String todoList = "";
+    int ownerID;
     private ArrayList<String> infoList = new ArrayList<String>();
 
-
-    private boolean finished = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,12 +92,13 @@ public class GroupLogin extends AppCompatActivity {
             if(byGetOrPost == 0)//register
             {
                 this.email = info;
-                dbHelper.insertUser(0, email, null, "");
+                dbHelper.insertGroup(0, email, null, "");
+                //Also add to the online version of the database
             }
             else if(byGetOrPost == 1)//login
             {
                 parseLogin(res);
-                dbHelper.insertUser(this.userID, this.email, this.pic, this.group);
+                dbHelper.insertGroup(this.group_id, this.groupName, this.shoppingList, this.calendar, this.money, this.todoList, this.ownerID);
             }
 
             Intent main = new Intent(this, MainActivity.class);
@@ -119,11 +122,14 @@ public class GroupLogin extends AppCompatActivity {
 
     public void parseLogin(String res)
     {
-        //need to parse ID, email, group, pic
-        this.userID = Integer.parseInt(this.infoList.get(1));
-        this.email = this.infoList.get(2).replaceAll("\\s", "");
-        this.pic = this.infoList.get(3).replaceAll("\\s", "");
-        this.group = this.infoList.get(4).replaceAll("\\s","");
+        //need to parse Group_ID, Group_name, shoppinglist, calendar, money, todoList, owner_id
+        this.group_id = Integer.parseInt(this.infoList.get(1));
+        this.groupName = this.infoList.get(2).replaceAll("\\s", "");
+        this.shoppingList = this.infoList.get(3).replaceAll("\\s", "");
+        this.calendar = this.infoList.get(4).replaceAll("\\s","");
+        this.money = this.infoList.get(5).replaceAll("\\s","");
+        this.todoList = this.infoList.get(6).replaceAll("\\s","");
+        this.ownerID = Integer.parseInt(this.infoList.get(7));
 
     }
 
