@@ -22,7 +22,7 @@ if ($result->num_rows > 0) {
 		"," . $row["CALENDAR"].
 		"," . $row["TODO"].
 		"," . $row["OWNER_ID"].
-		"," . $row["MONEY"]."<br>";
+		"," . $row["MONEY"];
     }
 } else {
     echo "0 results";

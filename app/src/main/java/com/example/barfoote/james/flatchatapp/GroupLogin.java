@@ -78,12 +78,22 @@ public class GroupLogin extends AppCompatActivity {
         //byGetOrPost = 0 means register
 
         this.infoList.addAll(Arrays.asList(res.split(",")));
-        Log.d("First item", "a" + this.infoList.get(0) + "b");
+        for(String s: infoList)
+        {
+            Log.v("infolist", s);
+
+        }
+        //Log.d("First item", "a" + this.infoList.get(0) + "b");
         this.status = res;
-        Log.d("Res", res);
+        Log.d("Res", "a"+infoList.get(0)+"b");
         if (infoList.get(0).equals("  successLG")) {
             //Login successful
-            Toast.makeText(getApplicationContext(), "Login Successful",
+            Log.d("name is", this.groupName);
+
+            Toast.makeText(getApplicationContext(), "Login Successful ",
+                    Toast.LENGTH_LONG).show();
+
+            Toast.makeText(getApplicationContext(), byGetOrPost + "is the res",
                     Toast.LENGTH_LONG).show();
 
             //Parse res to get all the user information (id, email, group, pic)
@@ -91,18 +101,22 @@ public class GroupLogin extends AppCompatActivity {
             dbHelper = new DBHelper(this);
             if(byGetOrPost == 0)//register
             {
-                this.groupName = info;
+                this.groupName = this.nameField.getText().toString();
                 dbHelper.insertGroup(0, this.groupName, "", "", "", "", this.ownerID);
-                //Add group to user
 
                 //Also add to the online version of the database
 
             }
             else if(byGetOrPost == 1)//login
             {
+                Log.v("login", res);
+
                 parseLogin(res);
-                dbHelper.insertGroup(this.group_id, this.groupName, this.shoppingList, this.calendar, this.money, this.todoList, this.ownerID);
+                Log.v("gn", this.groupName);
+                dbHelper.insertGroup(this.group_id, this.nameField.getText().toString(), this.shoppingList, this.calendar, this.money, this.todoList, this.ownerID);
                 //Add group to user
+                Toast.makeText(getApplicationContext(), dbHelper.getGroup(),
+                        Toast.LENGTH_LONG).show();
             }
 
             Intent main = new Intent(this, MainActivity.class);
@@ -126,15 +140,16 @@ public class GroupLogin extends AppCompatActivity {
 
     public void parseLogin(String res)
     {
+        Log.v("parselogin", res);
         //need to parse Group_ID, Group_name, shoppinglist, calendar, money, todoList, owner_id
         this.group_id = Integer.parseInt(this.infoList.get(1));
         Log.d("Group id","" + group_id);
-        this.groupName = this.infoList.get(2).replaceAll("\\s", "");
-        this.shoppingList = this.infoList.get(3).replaceAll("\\s", "");
-        this.calendar = this.infoList.get(4).replaceAll("\\s","");
-        this.money = this.infoList.get(5).replaceAll("\\s","");
-        this.todoList = this.infoList.get(6).replaceAll("\\s","");
-        this.ownerID = Integer.parseInt(this.infoList.get(7));
+        this.groupName = this.nameField.getText().toString().replaceAll("\\s", "");
+        this.shoppingList = this.infoList.get(2).replaceAll("\\s", "");
+        this.calendar = this.infoList.get(3).replaceAll("\\s","");
+        this.money = this.infoList.get(4).replaceAll("\\s","");
+        this.todoList = this.infoList.get(5).replaceAll("\\s","");
+        this.ownerID = Integer.parseInt(this.infoList.get(6));
 
     }
 

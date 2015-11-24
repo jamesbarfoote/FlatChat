@@ -55,7 +55,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public boolean insertUser(int userID, String email, String pic, String flatGroup) {
-
+        clearUserTable();
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(USER_COLUMN_USER_ID, userID);
@@ -127,6 +127,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public boolean insertGroup(int group_id, String groupName, String shoppingList, String calendar, String money, String todoList, int ownerID)
     {
+        clearGroupTable();
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(FLATGROUP_TABLE_NAME, group_id);
@@ -137,15 +138,30 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(FLATGROUP_COLUMN_MONEY, money);
         contentValues.put(FLATGROUP_COLUMN_TODO_LIST, todoList);
         contentValues.put(FLATGROUP_COLUMN_OWNER_ID, ownerID);
-        db.insert(USER_TABLE_NAME, null, contentValues);
+        db.insert(FLATGROUP_TABLE_NAME, null, contentValues);
+        addGroupToUser(groupName);
         return true;
+    }
+
+    public void addGroupToUser(String groupname)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(USER_COLUMN_FLAT_GROUP, groupname);
+        db.update(USER_TABLE_NAME, contentValues, USER_COLUMN_FLAT_GROUP + " = ? ", new String[]{Integer.toString(0)});
+
     }
 
 
 
-    public void clearTable()   {
+    public void clearUserTable()   {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(USER_TABLE_NAME, null,null);
+    }
+
+    public void clearGroupTable()   {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(FLATGROUP_TABLE_NAME, null,null);
     }
 
 }

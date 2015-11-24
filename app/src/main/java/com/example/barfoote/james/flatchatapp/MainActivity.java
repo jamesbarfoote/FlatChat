@@ -31,7 +31,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dbHelper = new DBHelper(this);
-        //dbHelper.clearTable();
+//        dbHelper.clearUserTable();
+//        dbHelper.clearGroupTable();
+
         //If there are no users in the local database then call the sign-in activity
         if(dbHelper.getAllUsers().getCount() < 1) {
             Intent loginAct = new Intent(this, Login_Reg.class);
@@ -125,7 +127,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (id == R.id.action_logout) {
-            dbHelper.clearTable();
+            dbHelper.clearUserTable();
+            dbHelper.clearGroupTable();
             startActivity(new Intent(this, Login_Reg.class));
             return true;
         }
