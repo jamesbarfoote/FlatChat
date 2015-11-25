@@ -93,9 +93,6 @@ public class GroupLogin extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Login Successful ",
                     Toast.LENGTH_LONG).show();
 
-            Toast.makeText(getApplicationContext(), byGetOrPost + "is the res",
-                    Toast.LENGTH_LONG).show();
-
             //Parse res to get all the user information (id, email, group, pic)
             //Add user to user database
             dbHelper = new DBHelper(this);
@@ -115,7 +112,6 @@ public class GroupLogin extends AppCompatActivity {
                 Log.v("gn", this.groupName);
                 dbHelper.insertGroup(this.group_id, this.nameField.getText().toString(), this.shoppingList, this.calendar, this.money, this.todoList, this.ownerID);
                 //Add group to user
-                Toast.makeText(getApplicationContext(), dbHelper.getGroup(), Toast.LENGTH_LONG).show();
 
 //                Cursor cur = dbHelper.getAllGroup();
 //                ArrayList temp = new ArrayList();
