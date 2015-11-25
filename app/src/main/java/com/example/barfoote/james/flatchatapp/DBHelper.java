@@ -14,6 +14,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "SQLiteUser.db";
     private static final int DATABASE_VERSION = 1;
+
     public static final String USER_TABLE_NAME = "user";
     public static final String USER_COLUMN_ID = "_id";
     public static final String USER_COLUMN_USER_ID = "userID";
@@ -27,11 +28,26 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String FLATGROUP_COLUMN_GROUP_NAME = "groupName";
     public static final String FLATGROUP_COLUMN_SHOPPINGLIST = "shoppingList";
     public static final String FLATGROUP_COLUMN_CALENDAR = "calendar";
-    public static final String FLATGROUP_COLUMN_MONEY= "groupName";
+    public static final String FLATGROUP_COLUMN_MONEY= "money";
     public static final String FLATGROUP_COLUMN_TODO_LIST= "todoList";
     public static final String FLATGROUP_COLUMN_OWNER_ID= "ownerID";
 
+    private static final String createFlatGroup = "CREATE TABLE " + FLATGROUP_TABLE_NAME + "(" +
+            FLATGROUP_COLUMN_ID + " INTEGER PRIMARY KEY, " +
+            FLATGROUP_COLUMN_GROUP_ID + " INTEGER, " +
+            FLATGROUP_COLUMN_GROUP_NAME + " TEXT, " +
+            FLATGROUP_COLUMN_SHOPPINGLIST + " TEXT," +
+            FLATGROUP_COLUMN_CALENDAR + " TEXT," +
+            FLATGROUP_COLUMN_MONEY + " TEXT," +
+            FLATGROUP_COLUMN_TODO_LIST + " TEXT," +
+            FLATGROUP_COLUMN_OWNER_ID + " TEXT" + ")";
 
+    private static final String createUser = "CREATE TABLE " + USER_TABLE_NAME + "(" +
+            USER_COLUMN_ID + " INTEGER PRIMARY KEY, " +
+            USER_COLUMN_USER_ID + " INTEGER, " +
+            USER_COLUMN_EMAIL + " TEXT, " +
+            USER_COLUMN_PICTURE + " TEXT," +
+            USER_COLUMN_FLAT_GROUP + " TEXT" + ")";
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME , null, DATABASE_VERSION);
@@ -39,13 +55,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + USER_TABLE_NAME + "(" +
-                        USER_COLUMN_ID + " INTEGER PRIMARY KEY, " +
-                        USER_COLUMN_USER_ID + " INTEGER, " +
-                        USER_COLUMN_EMAIL + " TEXT, " +
-                        USER_COLUMN_PICTURE + " TEXT," +
-                        USER_COLUMN_FLAT_GROUP + " TEXT" + ")"
-        );
+        db.execSQL(createUser);
+
+        Log.v("Users table created", "");
+        db.execSQL(createFlatGroup);
+        Log.v("Group table created", "Group table created");
+
     }
 
     @Override
@@ -118,6 +133,12 @@ public class DBHelper extends SQLiteOpenHelper {
         return res;
     }
 
+    public Cursor getAllGroup() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery( "SELECT * FROM " + FLATGROUP_TABLE_NAME, null );
+        return res;
+    }
+
     public Integer deleteUser(Integer id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(USER_TABLE_NAME,
@@ -125,12 +146,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 new String[] { Integer.toString(id) });
     }
 
-    public boolean insertGroup(int group_id, String groupName, String shoppingList, String calendar, String money, String todoList, int ownerID)
+    public boolean insertGroup(int group_id, String groupName, String shoppingList, String calendar, String money, String todoList, String ownerID)
     {
         clearGroupTable();
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(FLATGROUP_TABLE_NAME, group_id);
         contentValues.put(FLATGROUP_COLUMN_GROUP_ID, group_id);
         contentValues.put(FLATGROUP_COLUMN_GROUP_NAME, groupName);
         contentValues.put(FLATGROUP_COLUMN_SHOPPINGLIST, shoppingList);

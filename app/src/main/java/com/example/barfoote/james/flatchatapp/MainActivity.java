@@ -1,9 +1,10 @@
 package com.example.barfoote.james.flatchatapp;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private Handler handler = new Handler();
@@ -50,18 +52,25 @@ public class MainActivity extends AppCompatActivity {
       //  dbHelper.getRandom();
 
 //        Log.d("UserID", "" + dbHelper.getUser(1).getString(0));
-        String groupJoined = dbHelper.getGroup();
-        Log.d("Group", groupJoined);
-        if(groupJoined.equals("") || groupJoined.equals("<br>"))
-        {
-            Intent loggroup = new Intent(this, GroupLogin.class);
-            startActivity(loggroup);
-        }
-        else
-        {
-            Toast.makeText(getApplicationContext(), "Already in group",
-                    Toast.LENGTH_LONG).show();
-        }
+        Cursor cur = dbHelper.getAllGroup();
+                ArrayList temp = new ArrayList();
+                if (cur != null) {
+                    if (cur.moveToFirst()) {
+                        do {
+                            temp.add(cur.getString(cur.getColumnIndex("groupName"))); // "Title" is the field name(column) of the Table
+                        } while (cur.moveToNext());
+                    }
+                }
+             //   Log.v("Group name is ",temp.get(0).toString());
+        //if(temp.size() < 0) {
+            if (temp.size() <= 0) {
+                Intent loggroup = new Intent(this, GroupLogin.class);
+                startActivity(loggroup);
+            } else {
+                Toast.makeText(getApplicationContext(), "Already in group " + temp.get(0),
+                        Toast.LENGTH_LONG).show();
+            }
+        //}
 
         Button sendB = (Button)findViewById(R.id.btn_Send);
 

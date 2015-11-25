@@ -25,7 +25,7 @@ public class GroupLogin extends AppCompatActivity {
     String calendar = "";
     String money = "";
     String todoList = "";
-    int ownerID;
+    String ownerID;
     private ArrayList<String> infoList = new ArrayList<String>();
 
     @Override
@@ -85,7 +85,7 @@ public class GroupLogin extends AppCompatActivity {
         }
         //Log.d("First item", "a" + this.infoList.get(0) + "b");
         this.status = res;
-        Log.d("Res", "a"+infoList.get(0)+"b");
+        Log.d("Res", "a" + infoList.get(0) + "b");
         if (infoList.get(0).equals("  successLG")) {
             //Login successful
             Log.d("name is", this.groupName);
@@ -99,7 +99,7 @@ public class GroupLogin extends AppCompatActivity {
             //Parse res to get all the user information (id, email, group, pic)
             //Add user to user database
             dbHelper = new DBHelper(this);
-            if(byGetOrPost == 0)//register
+            if(byGetOrPost == 3)//register
             {
                 this.groupName = this.nameField.getText().toString();
                 dbHelper.insertGroup(0, this.groupName, "", "", "", "", this.ownerID);
@@ -107,7 +107,7 @@ public class GroupLogin extends AppCompatActivity {
                 //Also add to the online version of the database
 
             }
-            else if(byGetOrPost == 1)//login
+            else if(byGetOrPost == 2)//login
             {
                 Log.v("login", res);
 
@@ -115,8 +115,18 @@ public class GroupLogin extends AppCompatActivity {
                 Log.v("gn", this.groupName);
                 dbHelper.insertGroup(this.group_id, this.nameField.getText().toString(), this.shoppingList, this.calendar, this.money, this.todoList, this.ownerID);
                 //Add group to user
-                Toast.makeText(getApplicationContext(), dbHelper.getGroup(),
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), dbHelper.getGroup(), Toast.LENGTH_LONG).show();
+
+//                Cursor cur = dbHelper.getAllGroup();
+//                ArrayList temp = new ArrayList();
+//                if (cur != null) {
+//                    if (cur.moveToFirst()) {
+//                        do {
+//                            temp.add(cur.getString(cur.getColumnIndex("groupName"))); // "Title" is the field name(column) of the Table
+//                        } while (cur.moveToNext());
+//                    }
+//                }
+//                Log.v("Group name is ",temp.get(0).toString());
             }
 
             Intent main = new Intent(this, MainActivity.class);
@@ -145,11 +155,18 @@ public class GroupLogin extends AppCompatActivity {
         this.group_id = Integer.parseInt(this.infoList.get(1));
         Log.d("Group id","" + group_id);
         this.groupName = this.nameField.getText().toString().replaceAll("\\s", "");
+        Log.d("Group name","" + groupName);
         this.shoppingList = this.infoList.get(2).replaceAll("\\s", "");
+        Log.d("shopping list","" + shoppingList);
         this.calendar = this.infoList.get(3).replaceAll("\\s","");
+        Log.d("calendar","" + calendar);
         this.money = this.infoList.get(4).replaceAll("\\s","");
-        this.todoList = this.infoList.get(5).replaceAll("\\s","");
-        this.ownerID = Integer.parseInt(this.infoList.get(6));
+        Log.d("money","" + money);
+        this.todoList = this.infoList.get(6).replaceAll("\\s","");
+        Log.d("todo list","" + todoList);
+        this.ownerID = this.infoList.get(5).replaceAll("\\s", "");
+        Log.d("owner id","" + ownerID);
+
 
     }
 
