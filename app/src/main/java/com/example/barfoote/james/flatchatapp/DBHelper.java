@@ -31,6 +31,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String FLATGROUP_COLUMN_MONEY= "money";
     public static final String FLATGROUP_COLUMN_TODO_LIST= "todoList";
     public static final String FLATGROUP_COLUMN_OWNER_ID= "ownerID";
+    public String email;
 
     private static final String createFlatGroup = "CREATE TABLE " + FLATGROUP_TABLE_NAME + "(" +
             FLATGROUP_COLUMN_ID + " INTEGER PRIMARY KEY, " +
@@ -78,6 +79,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(USER_COLUMN_PICTURE, pic);
         contentValues.put(USER_COLUMN_FLAT_GROUP, flatGroup);
         db.insert(USER_TABLE_NAME, null, contentValues);
+        this.email = email;
         return true;
     }
 
@@ -172,7 +174,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-
+    public String getEmail()
+    {
+        return this.email;
+    }
 
     public void clearUserTable()   {
         SQLiteDatabase db = this.getWritableDatabase();

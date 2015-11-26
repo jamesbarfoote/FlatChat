@@ -111,7 +111,9 @@ public class GroupLogin extends AppCompatActivity {
                 parseLogin(res);
                 Log.v("gn", this.groupName);
                 dbHelper.insertGroup(this.group_id, this.nameField.getText().toString(), this.shoppingList, this.calendar, this.money, this.todoList, this.ownerID);
+
                 //Add group to user
+                new SQLConnect(this,status,role, 4).execute(dbHelper.getEmail(), this.nameField.getText().toString());
 
 //                Cursor cur = dbHelper.getAllGroup();
 //                ArrayList temp = new ArrayList();

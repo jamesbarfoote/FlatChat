@@ -43,7 +43,6 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
     @Override
     protected String doInBackground(String... arg0) {
         if(byGetOrPost == 0){ //Register a user
-
             try{//Register
                 this.username = (String)arg0[0];
                 String password = (String)arg0[1];
@@ -141,7 +140,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                 return new String("Exception: " + e.getMessage());
             }
         }
-        else{ //Register a group
+        else if(byGetOrPost == 3){ //Register a group
 
             try{//Register
                 this.username = (String)arg0[0];
@@ -153,6 +152,39 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                         .build();
                 Request request = new Request.Builder()
                         .url("http://jamesbarfoote.16mb.com/groupRegister.php")
+                        .post(formBody)
+                        .build();
+
+                Response response = client.newCall(request).execute();
+                BufferedReader in = new BufferedReader(new InputStreamReader(response.body().byteStream()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line="";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                    break;
+                }
+                in.close();
+                return sb.toString();
+            }
+
+            catch(Exception e){
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+        else{ //add group to user
+
+            try{
+                String name = (String)arg0[0];
+                String email = (String)arg0[1];
+                OkHttpClient client = new OkHttpClient();
+                RequestBody formBody = new FormEncodingBuilder()
+                        .add("name", name)
+                        .add("email", email)
+                        .build();
+                Request request = new Request.Builder()
+                        .url("http://jamesbarfoote.16mb.com/addGroupToUser.php")
                         .post(formBody)
                         .build();
 
