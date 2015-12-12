@@ -100,7 +100,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                     break;
                 }
                 in.close();
-                Log.d("Result of login ", sb.toString());
+                Log.d("RL (sql connect)", sb.toString());
                 return sb.toString();
             }
             catch(Exception e){
@@ -109,6 +109,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
         }
         else if(byGetOrPost == 2){//login to group
             try{
+                Log.d("In login group","");
                 this.username = (String)arg0[0];
                 String password = (String)arg0[1];
                 OkHttpClient client = new OkHttpClient();
@@ -133,7 +134,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                     break;
                 }
                 in.close();
-                Log.d("Result of login ", sb.toString());
+                Log.d("Result of login group", sb.toString());
                 return sb.toString();
             }
             catch(Exception e){
@@ -143,6 +144,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
         else if(byGetOrPost == 3){ //Register a group
 
             try{//Register
+                Log.d("In reg group","");
                 this.username = (String)arg0[0];
                 String password = (String)arg0[1];
                 OkHttpClient client = new OkHttpClient();
@@ -166,6 +168,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                     break;
                 }
                 in.close();
+                Log.d("result of group reg SQL", sb.toString());
                 return sb.toString();
             }
 
@@ -176,6 +179,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
         else{ //add group to user
 
             try{
+                Log.d("In add to user","");
                 String name = (String)arg0[0];
                 String email = (String)arg0[1];
                 OkHttpClient client = new OkHttpClient();
@@ -199,6 +203,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                     break;
                 }
                 in.close();
+                Log.d("result of group add", sb.toString());
                 return sb.toString();
             }
 
@@ -210,6 +215,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String result){
+
         String info = "";
         //Break the result up into 2 pieces (result of the query and the user info)
 

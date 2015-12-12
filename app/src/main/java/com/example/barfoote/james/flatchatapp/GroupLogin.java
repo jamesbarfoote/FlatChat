@@ -26,6 +26,7 @@ public class GroupLogin extends AppCompatActivity {
     String money = "";
     String todoList = "";
     String ownerID;
+    boolean loginSuccess = false;
     private ArrayList<String> infoList = new ArrayList<String>();
 
     @Override
@@ -65,6 +66,12 @@ public class GroupLogin extends AppCompatActivity {
         String name = nameField.getText().toString();
         String password = passwordField.getText().toString();
         new SQLConnect(this,status,role,2).execute(name,password);
+
+        if(loginSuccess)
+        {
+            Log.v("login success", "" + loginSuccess);
+            new SQLConnect(this,status,role, 4).execute(dbHelper.getEmail(), this.groupName);
+        }
     }
 
     public void register(){//Register group
@@ -76,7 +83,7 @@ public class GroupLogin extends AppCompatActivity {
     public void setResult(String res,String info, int byGetOrPost)
     {
         //byGetOrPost = 0 means register
-
+        Log.v("The results are", "" + res);
         this.infoList.addAll(Arrays.asList(res.split(",")));
         for(String s: infoList)
         {
@@ -106,14 +113,19 @@ public class GroupLogin extends AppCompatActivity {
             }
             else if(byGetOrPost == 2)//login
             {
+                String groupNameIs = this.nameField.getText().toString();
+                this.groupName = this.nameField.getText().toString();
+
                 Log.v("login", res);
 
                 parseLogin(res);
                 Log.v("gn", this.groupName);
-                dbHelper.insertGroup(this.group_id, this.nameField.getText().toString(), this.shoppingList, this.calendar, this.money, this.todoList, this.ownerID);
+                dbHelper.insertGroup(this.group_id, groupNameIs, this.shoppingList, this.calendar, this.money, this.todoList, this.ownerID);
 
                 //Add group to user
-                new SQLConnect(this,status,role, 4).execute(dbHelper.getEmail(), this.nameField.getText().toString());
+                loginSuccess = true;
+                addGroupToUser();
+                //new SQLConnect(this,status,role, 4).execute(dbHelper.getEmail(), groupNameIs);
 
 //                Cursor cur = dbHelper.getAllGroup();
 //                ArrayList temp = new ArrayList();
@@ -125,6 +137,13 @@ public class GroupLogin extends AppCompatActivity {
 //                    }
 //                }
 //                Log.v("Group name is ",temp.get(0).toString());
+            }
+            else if(byGetOrPost == 4)
+            {
+                Toast.makeText(getApplicationContext(), "updated internet table ",
+                        Toast.LENGTH_LONG).show();
+
+                Log.v("Res is for 4", res);
             }
 
             Intent main = new Intent(this, MainActivity.class);
@@ -159,13 +178,22 @@ public class GroupLogin extends AppCompatActivity {
         this.calendar = this.infoList.get(3).replaceAll("\\s","");
         Log.d("calendar","" + calendar);
         this.money = this.infoList.get(4).replaceAll("\\s","");
-        Log.d("money","" + money);
+        Log.d("money", "" + money);
         this.todoList = this.infoList.get(6).replaceAll("\\s","");
         Log.d("todo list","" + todoList);
         this.ownerID = this.infoList.get(5).replaceAll("\\s", "");
         Log.d("owner id","" + ownerID);
 
 
+    }
+
+    public void addGroupToUser()
+    {
+        if(loginSuccess)
+        {
+            Log.v("login success", "" + loginSuccess);
+            new SQLConnect(this,status,role, 4).execute(dbHelper.getEmail(), this.groupName);
+        }
     }
 
 
