@@ -52,7 +52,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                         .add("password", password)
                         .build();
                 Request request = new Request.Builder()
-                        .url("http://jamesbarfoote.16mb.com/register.php")
+                        .url("http://barfooteapps.16mb.com/register.php")
                         .post(formBody)
                         .build();
 
@@ -84,7 +84,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                         .add("password", password)
                         .build();
                 Request request = new Request.Builder()
-                        .url("http://jamesbarfoote.16mb.com/login.php")
+                        .url("http://barfooteapps.16mb.com/login.php")
                         .post(formBody)
                         .build();
 
@@ -118,7 +118,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                         .add("password", password)
                         .build();
                 Request request = new Request.Builder()
-                        .url("http://jamesbarfoote.16mb.com/groupLogin.php")
+                        .url("http://barfooteapps.16mb.com/groupLogin.php")
                         .post(formBody)
                         .build();
 
@@ -153,7 +153,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                         .add("password", password)
                         .build();
                 Request request = new Request.Builder()
-                        .url("http://jamesbarfoote.16mb.com/groupRegister.php")
+                        .url("http://barfooteapps.16mb.com/groupRegister.php")
                         .post(formBody)
                         .build();
 
@@ -188,7 +188,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                         .add("email", email)
                         .build();
                 Request request = new Request.Builder()
-                        .url("http://jamesbarfoote.16mb.com/addGroupToUser.php")
+                        .url("http://barfooteapps.16mb.com/addGroupToUser.php")
                         .post(formBody)
                         .build();
 
