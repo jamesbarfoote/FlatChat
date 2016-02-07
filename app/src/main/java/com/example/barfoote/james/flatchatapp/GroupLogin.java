@@ -93,6 +93,8 @@ public class GroupLogin extends AppCompatActivity {
         //Log.d("First item", "a" + this.infoList.get(0) + "b");
         this.status = res;
         Log.d("Res", "a" + infoList.get(0) + "b");
+        Log.d("Res", "a" + infoList.get(1) + "b");
+
         if (infoList.get(0).equals("  successLG")) {
             //Login successful
             Log.d("name is", this.groupName);
@@ -175,13 +177,13 @@ public class GroupLogin extends AppCompatActivity {
         Log.d("Group name","" + groupName);
         this.shoppingList = this.infoList.get(2).replaceAll("\\s", "");
         Log.d("shopping list","" + shoppingList);
-        this.calendar = this.infoList.get(3).replaceAll("\\s","");
+        this.calendar = this.infoList.get(4).replaceAll("\\s","");
         Log.d("calendar","" + calendar);
-        this.money = this.infoList.get(4).replaceAll("\\s","");
+        this.money = this.infoList.get(6).replaceAll("\\s","");
         Log.d("money", "" + money);
-        this.todoList = this.infoList.get(6).replaceAll("\\s","");
+        this.todoList = this.infoList.get(5).replaceAll("\\s","");
         Log.d("todo list","" + todoList);
-        this.ownerID = this.infoList.get(5).replaceAll("\\s", "");
+        this.ownerID = this.infoList.get(7).replaceAll("\\s", "");
         Log.d("owner id","" + ownerID);
 
 
@@ -189,11 +191,11 @@ public class GroupLogin extends AppCompatActivity {
 
     public void addGroupToUser()
     {
-        if(loginSuccess)
-        {
-            Log.v("login success", "" + loginSuccess);
-            new SQLConnect(this,status,role, 4).execute(dbHelper.getEmail(), this.groupName);
-        }
+//        if(loginSuccess)
+//        {
+//            Log.v("login success", "" + loginSuccess);
+//            new SQLConnect(this,status,role, 4).execute(dbHelper.getEmail(), this.groupName);
+//        }
     }
 
 
