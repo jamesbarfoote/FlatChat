@@ -1,8 +1,8 @@
 <?php
-  define('HOST','mysql.hostinger.in');
-  define('USER','u963422543_user');
-  define('PASS','pupp33');
-  define('DB','u963422543_db');
+define('HOST','mysql.hostinger.co.uk');
+define('USER','u997523806_user');
+define('PASS','pupp33');
+define('DB','u997523806_db');
   $con = mysqli_connect(HOST,USER,PASS,DB);
 
    $name = $_POST['name'];
