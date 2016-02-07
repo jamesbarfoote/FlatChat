@@ -118,7 +118,7 @@ public class GroupLogin extends AppCompatActivity {
                 String groupNameIs = this.nameField.getText().toString();
                 this.groupName = this.nameField.getText().toString();
 
-                Log.v("login", res);
+                Log.v("login -grouplogin", res);
 
                 parseLogin(res);
                 Log.v("gn", this.groupName);
@@ -177,13 +177,13 @@ public class GroupLogin extends AppCompatActivity {
         Log.d("Group name","" + groupName);
         this.shoppingList = this.infoList.get(2).replaceAll("\\s", "");
         Log.d("shopping list","" + shoppingList);
-        this.calendar = this.infoList.get(4).replaceAll("\\s","");
+        this.calendar = this.infoList.get(3).replaceAll("\\s","");
         Log.d("calendar","" + calendar);
         this.money = this.infoList.get(6).replaceAll("\\s","");
         Log.d("money", "" + money);
-        this.todoList = this.infoList.get(5).replaceAll("\\s","");
+        this.todoList = this.infoList.get(4).replaceAll("\\s","");
         Log.d("todo list","" + todoList);
-        this.ownerID = this.infoList.get(7).replaceAll("\\s", "");
+        this.ownerID = this.infoList.get(5).replaceAll("\\s", "");
         Log.d("owner id","" + ownerID);
 
 
@@ -191,6 +191,7 @@ public class GroupLogin extends AppCompatActivity {
 
     public void addGroupToUser()
     {
+        Log.v("in addgroutouser method", "test");
 //        if(loginSuccess)
 //        {
 //            Log.v("login success", "" + loginSuccess);
