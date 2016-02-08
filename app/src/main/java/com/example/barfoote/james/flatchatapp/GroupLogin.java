@@ -127,6 +127,7 @@ public class GroupLogin extends AppCompatActivity {
                 //Add group to user
                 loginSuccess = true;
                 addGroupToUser();
+                Log.v("updated user", "with group");
                 //new SQLConnect(this,status,role, 4).execute(dbHelper.getEmail(), groupNameIs);
 
 //                Cursor cur = dbHelper.getAllGroup();
@@ -191,12 +192,17 @@ public class GroupLogin extends AppCompatActivity {
 
     public void addGroupToUser()
     {
+        boolean success = false;
         Log.v("in addgroutouser method", "test");
         if(loginSuccess)
         {
             Log.v("login success", "" + loginSuccess);
-            new SQLConnect(this,status,role, 4).execute(dbHelper.getEmail(), this.groupName);
+            Log.v("The email", ""+dbHelper.getEmail());
+            Log.v("The group", ""+this.groupName);
+            new SQLConnect(this,status,role, 4).execute("a", "a");
+            success = true;
         }
+        Log.v("Adding finished", "" + success);
     }
 
 

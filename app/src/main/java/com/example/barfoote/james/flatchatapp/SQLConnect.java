@@ -135,6 +135,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                 }
                 in.close();
                 Log.d("Result of login group", sb.toString());
+                response.body().close();
                 return sb.toString();
             }
             catch(Exception e){
@@ -168,6 +169,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                     break;
                 }
                 in.close();
+                response.body().close();
                 Log.d("result of group reg SQL", sb.toString());
                 return sb.toString();
             }
@@ -176,19 +178,20 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                 return new String("Exception: " + e.getMessage());
             }
         }
-        else{ //add group to user
+        else if(byGetOrPost==4){ //add group to user
 
             try{
-                Log.d("In add to user","");
+                Log.v("In add to user","add group to user");
                 String name = (String)arg0[0];
                 String email = (String)arg0[1];
+
                 OkHttpClient client = new OkHttpClient();
                 RequestBody formBody = new FormEncodingBuilder()
                         .add("name", name)
                         .add("email", email)
                         .build();
                 Request request = new Request.Builder()
-                        .url("http://jimmyapps.16mb.com/addGroupToUser.php")
+                        .url("http://jimmyapps.16mb.com/agu.php")
                         .post(formBody)
                         .build();
 
@@ -200,6 +203,7 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
 
                 while ((line = in.readLine()) != null) {
                     sb.append(line);
+                    Log.d("Current place", "" + sb);
                     break;
                 }
                 in.close();
@@ -211,11 +215,15 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
                 return new String("Exception: " + e.getMessage());
             }
         }
+        else
+        {
+            return "Something went wrong";
+        }
     }
 
     @Override
     protected void onPostExecute(String result){
-
+        Log.v("post", result);
         String info = "";
         //Break the result up into 2 pieces (result of the query and the user info)
 
@@ -229,6 +237,8 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
             lr.setResult(result, info, byGetOrPost);
         }
         else if(context instanceof GroupLogin){
+            Log.v("result - SQL", "" + result);
+            Log.v("info - SQL", "" + info);
             GroupLogin gl = (GroupLogin)context;
             gl.setResult(result, info, byGetOrPost);
         }

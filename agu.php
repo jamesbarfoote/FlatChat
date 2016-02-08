@@ -9,7 +9,7 @@ define('DB','u997523806_db');
    $email = $_POST['email'];
 
 
-   $sql = "UPDATE Users ". "SET FlatGroup_name = 'adminG' ". "WHERE Email = 'jimmy2174@gmail.com'" ;
+   $sql = "UPDATE Users ". "SET FlatGroup_name = $name ". "WHERE Email = $email" ;
   # $sql = "UPDATE Users ". "SET FlatGroup_name = $name ". "WHERE Email = $email" ;
   if(mysqli_query($con,$sql)){
     echo 'successAGU';
