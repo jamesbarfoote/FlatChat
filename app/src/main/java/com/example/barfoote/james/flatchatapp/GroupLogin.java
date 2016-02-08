@@ -193,16 +193,14 @@ public class GroupLogin extends AppCompatActivity {
     public void addGroupToUser()
     {
         boolean success = false;
-        Log.v("in addgroutouser method", "test");
         if(loginSuccess)
         {
             Log.v("login success", "" + loginSuccess);
             Log.v("The email", ""+dbHelper.getEmail());
             Log.v("The group", ""+this.groupName);
-            new SQLConnect(this,status,role, 4).execute("a", "a");
+            new SQLConnect(this,status,role, 4).execute(this.groupName, "a");
             success = true;
         }
-        Log.v("Adding finished", "" + success);
     }
 
 

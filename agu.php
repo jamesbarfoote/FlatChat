@@ -5,17 +5,21 @@ define('PASS','pupp33');
 define('DB','u997523806_db');
   $con = mysqli_connect(HOST,USER,PASS,DB);
 
-   $name = $_POST['name'];
+   $FlatGroup_name = $_POST['FlatGroup_name'];
    $email = $_POST['email'];
 
-
-   $sql = "UPDATE Users ". "SET FlatGroup_name = $name ". "WHERE Email = $email" ;
+$t1 = $FlatGroup_name;
+$t2 = $email;
+   $sql = "UPDATE Users
+           SET FlatGroup_name= '$t1'
+           WHERE email= '$t2'";
+   #$sql = "UPDATE Users ". "SET FlatGroup_name WHERE Email values ('$email','$FlatGroup_name')";
   # $sql = "UPDATE Users ". "SET FlatGroup_name = $name ". "WHERE Email = $email" ;
   if(mysqli_query($con,$sql)){
     echo 'successAGU';
   }
   else{
-    echo 'failure';
+    echo $FlatGroup_name;
   }
   mysqli_close($con);
 ?>

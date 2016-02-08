@@ -182,13 +182,15 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
 
             try{
                 Log.v("In add to user","add group to user");
-                String name = (String)arg0[0];
+                String FlatGroup_name = (String)arg0[0];
                 String email = (String)arg0[1];
 
                 OkHttpClient client = new OkHttpClient();
                 RequestBody formBody = new FormEncodingBuilder()
-                        .add("name", name)
+                        .add("FlatGroup_name", FlatGroup_name)
                         .add("email", email)
+//                        .add("FlatGroup_name", "a")
+//                        .add("email", "ab")
                         .build();
                 Request request = new Request.Builder()
                         .url("http://jimmyapps.16mb.com/agu.php")
