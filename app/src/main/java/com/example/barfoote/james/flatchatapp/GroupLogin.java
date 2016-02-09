@@ -198,7 +198,7 @@ public class GroupLogin extends AppCompatActivity {
             Log.v("login success", "" + loginSuccess);
             Log.v("The email", ""+dbHelper.getEmail());
             Log.v("The group", ""+this.groupName);
-            new SQLConnect(this,status,role, 4).execute(this.groupName, "a");
+            new SQLConnect(this,status,role, 4).execute(this.groupName, dbHelper.getEmail());
             success = true;
         }
     }

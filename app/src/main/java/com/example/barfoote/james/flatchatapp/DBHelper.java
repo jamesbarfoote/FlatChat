@@ -114,6 +114,19 @@ public class DBHelper extends SQLiteOpenHelper {
         return "";
     }
 
+    public String getEmail()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + USER_TABLE_NAME;
+        Cursor  cursor = db.rawQuery(query,null);
+        if (cursor.moveToFirst()) {
+            Log.d("in if", "");
+            return cursor.getString(cursor.getColumnIndex("email"));
+
+        }
+        return "";
+    }
+
     public int getUserID(int id)
     {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -174,10 +187,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public String getEmail()
-    {
-        return this.email;
-    }
 
     public void clearUserTable()   {
         SQLiteDatabase db = this.getWritableDatabase();
