@@ -114,18 +114,7 @@ public class GroupLogin extends AppCompatActivity {
                 //Add group to user
                 loginSuccess = true;
                 addGroupToUser();
-                //new SQLConnect(this,status,role, 4).execute(dbHelper.getEmail(), groupNameIs);
-
-//                Cursor cur = dbHelper.getAllGroup();
-//                ArrayList temp = new ArrayList();
-//                if (cur != null) {
-//                    if (cur.moveToFirst()) {
-//                        do {
-//                            temp.add(cur.getString(cur.getColumnIndex("groupName"))); // "Title" is the field name(column) of the Table
-//                        } while (cur.moveToNext());
-//                    }
-//                }
-//                Log.v("Group name is ",temp.get(0).toString());
+               
             }
             else if(byGetOrPost == 4)
             {
@@ -156,7 +145,6 @@ public class GroupLogin extends AppCompatActivity {
 
     public void parseLogin(String res)
     {
-        Log.v("parselogin", res);
         //need to parse Group_ID, Group_name, shoppinglist, calendar, money, todoList, owner_id
         this.group_id = Integer.parseInt(this.infoList.get(1));
         Log.d("Group id","" + group_id);
@@ -177,7 +165,9 @@ public class GroupLogin extends AppCompatActivity {
         if(dbHelper.groupExists(groupName))
         {
             Log.v("SQLite", "updating group");
-            //Update with new info
+            //Update with new info from server
+            dbHelper.updateGroup(this.group_id, this.groupName, this.shoppingList, this.calendar, this.money,this.todoList, this.ownerID);
+
         }
         else //Insert new group
         {

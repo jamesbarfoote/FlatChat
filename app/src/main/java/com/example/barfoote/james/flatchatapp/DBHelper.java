@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 /**
  * Created by James on 11/17/2015.
  */
@@ -25,7 +27,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String FLATGROUP_TABLE_NAME = "fgroup";
     public static final String FLATGROUP_COLUMN_ID = "_id";
     public static final String FLATGROUP_COLUMN_GROUP_ID = "groupID";
-    public static final String FLATGROUP_COLUMN_GROUP_NAME = "groupName";
+    public static final String FLATGROUP_COLUMN_GROUP_NAME = "groupname";
     public static final String FLATGROUP_COLUMN_SHOPPINGLIST = "shoppingList";
     public static final String FLATGROUP_COLUMN_CALENDAR = "calendar";
     public static final String FLATGROUP_COLUMN_MONEY= "money";
@@ -178,22 +180,56 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public boolean updateGroup(int id, String groupName, String shoppingList, String calendar, String money, String todoList, String ownerID)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(FLATGROUP_COLUMN_GROUP_ID, id);
+        contentValues.put(FLATGROUP_COLUMN_GROUP_NAME, groupName);
+        contentValues.put(FLATGROUP_COLUMN_SHOPPINGLIST, shoppingList);
+        contentValues.put(FLATGROUP_COLUMN_CALENDAR, calendar);
+        contentValues.put(FLATGROUP_COLUMN_MONEY, money);
+        contentValues.put(FLATGROUP_COLUMN_TODO_LIST, todoList);
+        contentValues.put(FLATGROUP_COLUMN_OWNER_ID, ownerID);
+
+        db.update(FLATGROUP_TABLE_NAME, contentValues, FLATGROUP_COLUMN_ID + " = ? ", new String[]{Integer.toString(id)});
+        return true;
+    }
+
     public boolean groupExists(String gName)
     {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        String query = "SELECT * FROM " + FLATGROUP_COLUMN_GROUP_NAME;
+//        Cursor  cursor = db.rawQuery(query,null);
+//        if (cursor.moveToFirst()) {
+//            if(cursor.getString(cursor.getColumnIndex("groupname")).equals(gName))
+//            {
+//                return true;
+//            }
+//            else
+//            {
+//                return false;
+//            }
+//
+//        }
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM " + FLATGROUP_COLUMN_GROUP_NAME;
-        Cursor  cursor = db.rawQuery(query,null);
-        if (cursor.moveToFirst()) {
-            if(cursor.getString(cursor.getColumnIndex("FLATGROUP_COLUMN_GROUP_ID")).equals(gName))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+        String query ="SELECT * FROM fgroup";
 
+        Cursor  cursor = db.rawQuery(query,null);
+
+        ArrayList<String> contents = new ArrayList<>();
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            contents.add(cursor.getString(0));
+            cursor.moveToNext();
         }
+
+        if(contents.contains(gName))
+        {
+            return true;
+        }
+
         return false;
     }
 
