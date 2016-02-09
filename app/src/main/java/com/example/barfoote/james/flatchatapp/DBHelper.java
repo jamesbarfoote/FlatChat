@@ -51,7 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
             USER_COLUMN_FLAT_GROUP + " TEXT" + ")";
 
     public DBHelper(Context context) {
-        super(context, DATABASE_NAME , null, DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -144,13 +144,13 @@ public class DBHelper extends SQLiteOpenHelper {
 //    }
     public Cursor getAllUsers() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery( "SELECT * FROM " + USER_TABLE_NAME, null );
+        Cursor res = db.rawQuery("SELECT * FROM " + USER_TABLE_NAME, null);
         return res;
     }
 
     public Cursor getAllGroup() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery( "SELECT * FROM " + FLATGROUP_TABLE_NAME, null );
+        Cursor res = db.rawQuery("SELECT * FROM " + FLATGROUP_TABLE_NAME, null);
         return res;
     }
 
@@ -176,6 +176,25 @@ public class DBHelper extends SQLiteOpenHelper {
         db.insert(FLATGROUP_TABLE_NAME, null, contentValues);
         addGroupToUser(groupName);
         return true;
+    }
+
+    public boolean groupExists(String gName)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + FLATGROUP_COLUMN_GROUP_NAME;
+        Cursor  cursor = db.rawQuery(query,null);
+        if (cursor.moveToFirst()) {
+            if(cursor.getString(cursor.getColumnIndex("FLATGROUP_COLUMN_GROUP_ID")).equals(gName))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        return false;
     }
 
     public void addGroupToUser(String groupname)

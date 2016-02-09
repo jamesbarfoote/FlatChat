@@ -69,7 +69,6 @@ public class GroupLogin extends AppCompatActivity {
 
         if(loginSuccess)
         {
-            Log.v("login success", "" + loginSuccess);
             new SQLConnect(this,status,role, 4).execute(dbHelper.getEmail(), this.groupName);
         }
     }
@@ -83,21 +82,12 @@ public class GroupLogin extends AppCompatActivity {
     public void setResult(String res,String info, int byGetOrPost)
     {
         //byGetOrPost = 0 means register
-        Log.v("The results are", "" + res);
         this.infoList.addAll(Arrays.asList(res.split(",")));
-        for(String s: infoList)
-        {
-            Log.v("infolist", s);
-
-        }
         //Log.d("First item", "a" + this.infoList.get(0) + "b");
         this.status = res;
-        Log.d("Res", "a" + infoList.get(0) + "b");
-        Log.d("Res", "a" + infoList.get(1) + "b");
 
         if (infoList.get(0).equals("  successLG")) {
             //Login successful
-            Log.d("name is", this.groupName);
 
             Toast.makeText(getApplicationContext(), "Login Successful ",
                     Toast.LENGTH_LONG).show();
@@ -118,16 +108,12 @@ public class GroupLogin extends AppCompatActivity {
                 String groupNameIs = this.nameField.getText().toString();
                 this.groupName = this.nameField.getText().toString();
 
-                Log.v("login -grouplogin", res);
-
                 parseLogin(res);
-                Log.v("gn", this.groupName);
                 dbHelper.insertGroup(this.group_id, groupNameIs, this.shoppingList, this.calendar, this.money, this.todoList, this.ownerID);
 
                 //Add group to user
                 loginSuccess = true;
                 addGroupToUser();
-                Log.v("updated user", "with group");
                 //new SQLConnect(this,status,role, 4).execute(dbHelper.getEmail(), groupNameIs);
 
 //                Cursor cur = dbHelper.getAllGroup();
@@ -187,6 +173,17 @@ public class GroupLogin extends AppCompatActivity {
         this.ownerID = this.infoList.get(5).replaceAll("\\s", "");
         Log.d("owner id","" + ownerID);
 
+        //add this data to the local sql database
+        if(dbHelper.groupExists(groupName))
+        {
+            Log.v("SQLite", "updating group");
+            //Update with new info
+        }
+        else //Insert new group
+        {
+            Log.v("SQLite", "Inserting new group");
+            dbHelper.insertGroup(this.group_id, this.groupName, this.shoppingList, this.calendar, this.money,this.todoList, this.ownerID);
+        }
 
     }
 
@@ -195,7 +192,7 @@ public class GroupLogin extends AppCompatActivity {
         boolean success = false;
         if(loginSuccess)
         {
-            Log.v("login success", "" + loginSuccess);
+           // Log.v("login success", "" + loginSuccess);
             Log.v("The email", ""+dbHelper.getEmail());
             Log.v("The group", ""+this.groupName);
             new SQLConnect(this,status,role, 4).execute(this.groupName, dbHelper.getEmail());
