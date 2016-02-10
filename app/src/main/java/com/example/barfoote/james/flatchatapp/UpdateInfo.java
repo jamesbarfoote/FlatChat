@@ -22,15 +22,18 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
     private final Context mContext;
     private ArrayList<String> groupData = new ArrayList<>();
     private int whatToDo;
+    private ArrayList<String> newData = new ArrayList<>();
 
     DBHelper dbHelper= new DBHelper(getmContext());
 
 
-
-    public UpdateInfo(Context c)
+    //newData is the data the user wants to add to the internet db
+    //method is the method that the update request came from
+    public UpdateInfo(Context c, ArrayList<String> newData, int method)
     {
         mContext = c;
-        //this.whatToDo = method;
+        this.whatToDo = method;
+        this.newData = newData;
     }
 
     public Context getmContext() {
