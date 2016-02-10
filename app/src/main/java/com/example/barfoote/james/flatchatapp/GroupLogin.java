@@ -109,12 +109,27 @@ public class GroupLogin extends AppCompatActivity {
                 this.groupName = this.nameField.getText().toString();
 
                 parseLogin(res);
-                dbHelper.insertGroup(this.group_id, groupNameIs, this.shoppingList, this.calendar, this.money, this.todoList, this.ownerID);
+
+                if(dbHelper.groupExists(groupName))
+                {
+                    Log.v("SQLite", "updating group");
+                    //Update with new info from server
+                    dbHelper.updateGroup(this.group_id, this.groupName, this.shoppingList, this.calendar, this.money,this.todoList, this.ownerID);
+
+                }
+                else //Insert new group
+                {
+                    Log.v("SQLite", "Inserting new group");
+                    dbHelper.insertGroup(this.group_id, this.groupName, this.shoppingList, this.calendar, this.money, this.todoList, this.ownerID);
+
+                }
+
+               // dbHelper.insertGroup(this.group_id, groupNameIs, this.shoppingList, this.calendar, this.money, this.todoList, this.ownerID);
 
                 //Add group to user
                 loginSuccess = true;
                 addGroupToUser();
-               
+
             }
             else if(byGetOrPost == 4)
             {
@@ -162,18 +177,7 @@ public class GroupLogin extends AppCompatActivity {
         Log.d("owner id","" + ownerID);
 
         //add this data to the local sql database
-        if(dbHelper.groupExists(groupName))
-        {
-            Log.v("SQLite", "updating group");
-            //Update with new info from server
-            dbHelper.updateGroup(this.group_id, this.groupName, this.shoppingList, this.calendar, this.money,this.todoList, this.ownerID);
 
-        }
-        else //Insert new group
-        {
-            Log.v("SQLite", "Inserting new group");
-            dbHelper.insertGroup(this.group_id, this.groupName, this.shoppingList, this.calendar, this.money,this.todoList, this.ownerID);
-        }
 
     }
 

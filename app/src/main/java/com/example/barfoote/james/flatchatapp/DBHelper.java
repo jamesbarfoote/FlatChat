@@ -3,6 +3,7 @@ package com.example.barfoote.james.flatchatapp;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -34,6 +35,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String FLATGROUP_COLUMN_TODO_LIST= "todoList";
     public static final String FLATGROUP_COLUMN_OWNER_ID= "ownerID";
     public String email;
+    public String todoList = "";
 
     private static final String createFlatGroup = "CREATE TABLE " + FLATGROUP_TABLE_NAME + "(" +
             FLATGROUP_COLUMN_ID + " INTEGER PRIMARY KEY, " +
@@ -119,11 +121,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public String getEmail()
     {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM " + USER_TABLE_NAME;
+        String query = "SELECT * FROM " + FLATGROUP_TABLE_NAME;
         Cursor  cursor = db.rawQuery(query,null);
         if (cursor.moveToFirst()) {
             Log.d("in if", "");
-            return cursor.getString(cursor.getColumnIndex("email"));
+            return cursor.getString(cursor.getColumnIndex("todoList"));
 
         }
         return "";
@@ -165,6 +167,15 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public boolean insertGroup(int group_id, String groupName, String shoppingList, String calendar, String money, String todoList, String ownerID)
     {
+
+        Log.v("Inserting", "" + group_id);
+        Log.v("Inserting", "" + groupName);
+        Log.v("Inserting", "" + shoppingList);
+        Log.v("Inserting", "" + calendar);
+        Log.v("Inserting", "" + money);
+        Log.v("Inserting", "" + todoList);
+        Log.v("Inserting", "" + ownerID);
+
         clearGroupTable();
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -176,7 +187,21 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(FLATGROUP_COLUMN_TODO_LIST, todoList);
         contentValues.put(FLATGROUP_COLUMN_OWNER_ID, ownerID);
         db.insert(FLATGROUP_TABLE_NAME, null, contentValues);
+
+
         addGroupToUser(groupName);
+
+//        Cursor  cursor = db.rawQuery("select todoList from fgroup", null);
+////        ArrayList<String> list = new ArrayList<>();
+//        Log.v("Stuff", "Stuff " + DatabaseUtils.dumpCursorToString(cursor));
+
+
+       // SQLiteDatabase db = this.getReadableDatabase();
+        Cursor  cursor = db.rawQuery("select todoList from fgroup", null);
+        if(cursor.moveToFirst()){
+            this.todoList = cursor.getString(0);
+            Log.v("Stuff", "Stuff " + todoList);}
+
         return true;
     }
 
@@ -194,6 +219,17 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.update(FLATGROUP_TABLE_NAME, contentValues, FLATGROUP_COLUMN_ID + " = ? ", new String[]{Integer.toString(id)});
         return true;
+    }
+
+    public String getNotes()
+    {
+        String list = "";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor  cursor = db.rawQuery("select todoList from fgroup", null);
+        if(cursor.moveToFirst()){
+            list = cursor.getString(0);
+            Log.v("Stuff", "Stuff " + list);}
+        return list;
     }
 
     public boolean groupExists(String gName)
