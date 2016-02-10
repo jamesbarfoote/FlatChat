@@ -46,10 +46,22 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
 
     @Override
     protected String doInBackground(String... arg0) {
-//        if(whatToDo == 1)//pull down the latest version of the internet db
-//        {
-//
-//        }
+        if(whatToDo == 1)//call came from NotesActivity
+        {
+            //First pull down the latest version from the net
+            pullDownDB();
+
+            //process that data
+            processInternetDB();
+
+            //Add that data to the local db fields
+
+            //Get the local db
+            getLocalDB();
+
+            //Push the local db to the internet
+            pushDB();
+        }
 //        else if(whatToDo == 2) //Push up the updated db
 //        {
 //
@@ -90,5 +102,15 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
             return true;
         }
         return false;
+    }
+
+    private boolean pullDownDB()
+    {
+
+    }
+
+    private boolean pushDB()
+    {
+
     }
 }
