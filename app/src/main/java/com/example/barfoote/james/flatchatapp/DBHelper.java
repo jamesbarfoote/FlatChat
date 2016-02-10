@@ -221,6 +221,15 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public boolean updateNotes(String notes)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(FLATGROUP_COLUMN_TODO_LIST, notes);
+        db.update(FLATGROUP_TABLE_NAME, contentValues, FLATGROUP_COLUMN_ID + " = ? ", new String[]{Integer.toString(1)});
+        return true;
+    }
+
     public String getNotes()
     {
         String list = "";

@@ -73,6 +73,25 @@ public class NotesActivity extends ListActivity {
         listItems.add(text);
         adapter.notifyDataSetChanged();
         //call sql and add into the notes column of the group
+
+        //update local db
+        String sList = listToString(listItems);
+        dbHelper.updateNotes(sList);
+        Log.v("Updated list", "notes " + sList);
+
+        //update internet table
+
+    }
+
+    public String listToString(ArrayList<String> items)
+    {
+        String allItems = "";
+        for(String n: items)
+        {
+            allItems = allItems + n  + "~";
+        }
+
+        return allItems;
     }
 
     public ArrayList<String> parseNotes(String notes)
