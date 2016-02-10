@@ -1,0 +1,8 @@
+update class:
+updates the internet database from the local database
+Is called everytime someone makes a change.
+First data is pulled down so that we have the most up to date version in the local db
+Then the users new info is added to it. Then put is called to update the internet table
+
+getGroup info
+put group info

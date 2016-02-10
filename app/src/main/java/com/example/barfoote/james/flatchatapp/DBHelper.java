@@ -167,15 +167,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public boolean insertGroup(int group_id, String groupName, String shoppingList, String calendar, String money, String todoList, String ownerID)
     {
-
-        Log.v("Inserting", "" + group_id);
-        Log.v("Inserting", "" + groupName);
-        Log.v("Inserting", "" + shoppingList);
-        Log.v("Inserting", "" + calendar);
-        Log.v("Inserting", "" + money);
-        Log.v("Inserting", "" + todoList);
-        Log.v("Inserting", "" + ownerID);
-
         clearGroupTable();
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -188,15 +179,8 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(FLATGROUP_COLUMN_OWNER_ID, ownerID);
         db.insert(FLATGROUP_TABLE_NAME, null, contentValues);
 
-
         addGroupToUser(groupName);
 
-//        Cursor  cursor = db.rawQuery("select todoList from fgroup", null);
-////        ArrayList<String> list = new ArrayList<>();
-//        Log.v("Stuff", "Stuff " + DatabaseUtils.dumpCursorToString(cursor));
-
-
-       // SQLiteDatabase db = this.getReadableDatabase();
         Cursor  cursor = db.rawQuery("select todoList from fgroup", null);
         if(cursor.moveToFirst()){
             this.todoList = cursor.getString(0);
@@ -239,6 +223,20 @@ public class DBHelper extends SQLiteOpenHelper {
             list = cursor.getString(0);
             Log.v("Stuff", "Stuff " + list);}
         return list;
+    }
+
+    public ArrayList<String> getGroupData()
+    {
+        ArrayList<String> groupData = new ArrayList<String>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor  cursor = db.rawQuery("select * from fgroup", null);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            while (cursor.moveToNext()) {
+                groupData.add(cursor.getString(0));
+            }
+        }
+        return groupData;
     }
 
     public boolean groupExists(String gName)

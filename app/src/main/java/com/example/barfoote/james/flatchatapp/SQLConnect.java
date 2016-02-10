@@ -36,6 +36,8 @@ public class SQLConnect  extends AsyncTask<String,Void,String> {
         byGetOrPost = flag;
     }
 
+
+
     protected void onPreExecute(){
 
     }
