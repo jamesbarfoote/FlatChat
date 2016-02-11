@@ -70,6 +70,12 @@ public class NotesActivity extends ListActivity {
         adapter.notifyDataSetChanged();
         //call sql and add into the notes column of the group
 
+//       ArrayList<String> stuff = dbHelper.getGroupData();
+//        for(String n: stuff)
+//        {
+//            Log.v("Life", "" + n);
+//        }
+
         //get latest version from the internet
         updater = new UpdateInfo(this, null, 1);
         displayNotesLocal();

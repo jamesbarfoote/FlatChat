@@ -230,11 +230,13 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<String> groupData = new ArrayList<String>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor  cursor = db.rawQuery("select * from fgroup", null);
-        if (cursor != null && cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            while (cursor.moveToNext()) {
-                groupData.add(cursor.getString(0));
-            }
+        if ( cursor.moveToFirst()){
+            do {
+                for(int i=0; i<cursor.getColumnCount();i++)
+                {
+                    groupData.add(cursor.getString(i));
+                }
+            } while (cursor.moveToNext());
         }
         return groupData;
     }

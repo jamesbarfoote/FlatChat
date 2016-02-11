@@ -1,0 +1,9 @@
+getGroupData order:
+Local ID: 1
+Group ID: 2
+Group name: a
+Shopping list pear!cookies
+Calendar: events
+Money: 9000
+TODO: getmilk
+Owner ID: 2

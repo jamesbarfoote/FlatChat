@@ -159,7 +159,41 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
 
     private String pushDB()//update internet with local data
     {
+        try{
+            Log.d("In update group", "updating internet group");
+            OkHttpClient client = new OkHttpClient();
+            RequestBody formBody = new FormEncodingBuilder()
+                    .add("GROUP_NAME", this.groupData.get(2))
+                    .add("SHOPPING_LIST", this.groupData.get(3))
+                    .add("CALENDAR", this.groupData.get(4))
+                    .add("MONEY", this.groupData.get(5))
+                    .add("TODO", this.groupData.get(6))
+                    .add("OWNER_ID", this.groupData.get(7))
+                    .build();
+            Request request = new Request.Builder()
+                    .url("http://jimmyapps.16mb.com/updateGroupData.php")
+                    .post(formBody)
+                    .build();
 
+            Response response = client.newCall(request).execute();
+            BufferedReader in = new BufferedReader(new InputStreamReader(response.body().byteStream()));
+
+            StringBuffer sb = new StringBuffer("");
+            String line="";
+
+            while ((line = in.readLine()) != null) {
+
+                sb.append(line);
+                break;
+            }
+            in.close();
+            Log.d("Result updating group", sb.toString());
+            response.body().close();
+            return sb.toString();
+        }
+        catch(Exception e){
+            return new String("Exception: " + e.getMessage());
+        }
     }
 
     public void parseLogin(ArrayList<String> infoList)
