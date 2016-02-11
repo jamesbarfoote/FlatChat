@@ -1,6 +1,7 @@
 package com.example.barfoote.james.flatchatapp;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ public class NotesActivity extends ListActivity {
     int clickCounter=0;
 
     DBHelper dbHelper= new DBHelper(this);
+    UpdateInfo updater;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,13 +59,7 @@ public class NotesActivity extends ListActivity {
             }
         });
 
-        String list = dbHelper.getNotes();
-        Log.v("List", "List " + list);
-
-        ArrayList<String> notesList = parseNotes(list);
-        for(String n: notesList) {
-            listItems.add(n);
-        }
+        displayNotesLocal();
     }
 
     //METHOD WHICH WILL HANDLE DYNAMIC INSERTION
@@ -74,13 +70,30 @@ public class NotesActivity extends ListActivity {
         adapter.notifyDataSetChanged();
         //call sql and add into the notes column of the group
 
+        //get latest version from the internet
+        updater = new UpdateInfo(this, null, 1);
+        displayNotesLocal();
+
         //update local db
         String sList = listToString(listItems);
         dbHelper.updateNotes(sList);
         Log.v("Updated list", "notes " + sList);
 
         //update internet table
+        updater = new UpdateInfo(this, null, 2);
 
+
+    }
+
+    public void displayNotesLocal()
+    {
+        String list = dbHelper.getNotes();
+        Log.v("List", "List " + list);
+
+        ArrayList<String> notesList = parseNotes(list);
+        for(String n: notesList) {
+            listItems.add(n);
+        }
     }
 
     public String listToString(ArrayList<String> items)

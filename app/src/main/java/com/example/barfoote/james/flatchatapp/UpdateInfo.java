@@ -46,7 +46,7 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
 
     @Override
     protected String doInBackground(String... arg0) {
-        if(whatToDo == 1)//call came from NotesActivity
+        if(whatToDo == 1)//call came from NotesActivity and we only want to get the data
         {
             //First pull down the latest version from the net
             pullDownDB();
@@ -56,16 +56,16 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
 
             //Add that data to the local db fields
 
+
+        }
+        else if(whatToDo == 2)//call came from NotesActivity and we only want to push the data
+        {
             //Get the local db
             getLocalDB();
 
             //Push the local db to the internet
             pushDB();
         }
-//        else if(whatToDo == 2) //Push up the updated db
-//        {
-//
-//        }
 
 
 
@@ -77,20 +77,11 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
     protected void onPostExecute(String result){
 
     }
+    
 
-//    public boolean putGroup()
-//    {
-//        getLocalDB();
-//        return true;
-//    }
-//
-//    public boolean getGroup()
-//    {
-//        return true;
-//    }
-
-    public boolean processInternetDB(String data)
+    public boolean processInternetDB(String data) //Pull the string appart and put the values into their corresponding db column
     {
+
         return false;
     }
 
@@ -104,12 +95,12 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
         return false;
     }
 
-    private boolean pullDownDB()
+    private boolean pullDownDB()//get group from internet
     {
 
     }
 
-    private boolean pushDB()
+    private boolean pushDB()//update internet with local data
     {
 
     }
