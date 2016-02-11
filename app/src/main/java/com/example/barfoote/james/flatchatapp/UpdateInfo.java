@@ -12,7 +12,9 @@ import com.squareup.okhttp.Response;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by james on 2/11/2016.
@@ -32,7 +34,14 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
     private ArrayList<String> groupData = new ArrayList<>();
     private int whatToDo;
     private ArrayList<String> newData = new ArrayList<>();
-    private String username;
+
+    private String group_name;
+    private String shoppingList;
+    private String calendar;
+    private String money;
+    private String todoList;
+    private String ownerID;
+    private int group_id;
 
     DBHelper dbHelper= new DBHelper(getmContext());
 
@@ -59,11 +68,11 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
         if(whatToDo == 1)//call came from NotesActivity and we only want to get the data
         {
             //First pull down the latest version from the net
-            pullDownDB();
+            String retrieved = pullDownDB();
 
             //process that data
             //Add that data to the local db fields
-            processInternetDB();
+            processInternetDB(retrieved);
 
         }
         else if(whatToDo == 2)//call came from NotesActivity and we only want to push the data
@@ -89,6 +98,16 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
 
     public boolean processInternetDB(String data) //Pull the string appart and put the values into their corresponding db column
     {
+        //Split the data and put it into an array
+        ArrayList<String> seperatedD = new ArrayList<>();
+        seperatedD.addAll(Arrays.asList(data.split(",")));
+
+        if (seperatedD.get(0).equals("  successGG")) {
+            parseLogin(seperatedD);
+            dbHelper.updateGroup(this.group_id, this.group_name, this.shoppingList, this.calendar, this.money, this.todoList, this.ownerID);
+
+            return true;
+        }
 
         return false;
     }
@@ -107,10 +126,10 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
     {
         try{
             Log.d("In get group", "");
-            this.username = dbHelper.getGroup();
+            this.group_name = dbHelper.getGroup();
             OkHttpClient client = new OkHttpClient();
             RequestBody formBody = new FormEncodingBuilder()
-                    .add("GROUP_NAME", username)
+                    .add("GROUP_NAME", this.group_name)
                     .build();
             Request request = new Request.Builder()
                     .url("http://jimmyapps.16mb.com/getGroupData.php")
@@ -138,8 +157,29 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
         }
     }
 
-    private boolean pushDB()//update internet with local data
+    private String pushDB()//update internet with local data
     {
+
+    }
+
+    public void parseLogin(ArrayList<String> infoList)
+    {
+        //need to parse Group_ID, Group_name, shoppinglist, calendar, money, todoList, owner_id
+        this.group_id = Integer.parseInt(infoList.get(1));
+        Log.d("Group id","" + group_id);
+        this.shoppingList = infoList.get(2).replaceAll("\\s", "");
+        Log.d("shopping list","" + shoppingList);
+        this.calendar = infoList.get(3).replaceAll("\\s","");
+        Log.d("calendar","" + calendar);
+        this.money = infoList.get(6).replaceAll("\\s","");
+        Log.d("money", "" + money);
+        this.todoList = infoList.get(4).replaceAll("\\s","");
+        Log.d("todo list","" + todoList);
+        this.ownerID = infoList.get(5).replaceAll("\\s", "");
+        Log.d("owner id","" + ownerID);
+
+        //add this data to the local sql database
+
 
     }
 }
