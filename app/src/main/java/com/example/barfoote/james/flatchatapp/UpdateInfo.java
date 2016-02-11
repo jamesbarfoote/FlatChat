@@ -2,7 +2,16 @@ package com.example.barfoote.james.flatchatapp;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
@@ -23,6 +32,7 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
     private ArrayList<String> groupData = new ArrayList<>();
     private int whatToDo;
     private ArrayList<String> newData = new ArrayList<>();
+    private String username;
 
     DBHelper dbHelper= new DBHelper(getmContext());
 
@@ -52,10 +62,8 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
             pullDownDB();
 
             //process that data
-            processInternetDB();
-
             //Add that data to the local db fields
-
+            processInternetDB();
 
         }
         else if(whatToDo == 2)//call came from NotesActivity and we only want to push the data
@@ -95,9 +103,39 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
         return false;
     }
 
-    private boolean pullDownDB()//get group from internet
+    private String pullDownDB()//get group from internet
     {
+        try{
+            Log.d("In get group", "");
+            this.username = dbHelper.getGroup();
+            OkHttpClient client = new OkHttpClient();
+            RequestBody formBody = new FormEncodingBuilder()
+                    .add("GROUP_NAME", username)
+                    .build();
+            Request request = new Request.Builder()
+                    .url("http://jimmyapps.16mb.com/getGroupData.php")
+                    .post(formBody)
+                    .build();
 
+            Response response = client.newCall(request).execute();
+            BufferedReader in = new BufferedReader(new InputStreamReader(response.body().byteStream()));
+
+            StringBuffer sb = new StringBuffer("");
+            String line="";
+
+            while ((line = in.readLine()) != null) {
+
+                sb.append(line);
+                break;
+            }
+            in.close();
+            Log.d("Result of getting group", sb.toString());
+            response.body().close();
+            return sb.toString();
+        }
+        catch(Exception e){
+            return new String("Exception: " + e.getMessage());
+        }
     }
 
     private boolean pushDB()//update internet with local data
