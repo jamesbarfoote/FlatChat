@@ -83,10 +83,6 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
             //Push the local db to the internet
             pushDB();
         }
-
-
-
-
         return "";
     }
 
@@ -171,7 +167,7 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
                     .add("OWNER_ID", this.groupData.get(7))
                     .build();
             Request request = new Request.Builder()
-                    .url("http://jimmyapps.16mb.com/updateGroupData.php")
+                    .url("http://jimmyapps.16mb.com/groupUpdate.php")
                     .post(formBody)
                     .build();
 
