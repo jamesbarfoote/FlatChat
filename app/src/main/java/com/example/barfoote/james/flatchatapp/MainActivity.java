@@ -52,22 +52,23 @@ public class MainActivity extends AppCompatActivity {
       //  dbHelper.getRandom();
 
 //        Log.d("UserID", "" + dbHelper.getUser(1).getString(0));
-        Cursor cur = dbHelper.getAllGroup();
-                ArrayList temp = new ArrayList();
-                if (cur != null) {
-                    if (cur.moveToFirst()) {
-                        do {
-                            temp.add(cur.getString(cur.getColumnIndex("groupName"))); // "Title" is the field name(column) of the Table
-                        } while (cur.moveToNext());
-                    }
-                }
+//        Cursor cur = dbHelper.getAllGroup();
+//                ArrayList temp = new ArrayList();
+//                if (cur != null) {
+//                    if (cur.moveToFirst()) {
+//                        do {
+//                            temp.add(cur.getString(cur.getColumnIndex("groupName"))); // "Title" is the field name(column) of the Table
+//                        } while (cur.moveToNext());
+//                    }
+//                }
              //   Log.v("Group name is ",temp.get(0).toString());
         //if(temp.size() < 0) {
-            if (temp.size() <= 0) {
+        String group = dbHelper.getGroup();
+            if (group.isEmpty()) {
                 Intent loggroup = new Intent(this, GroupLogin.class);
                 startActivity(loggroup);
             } else {
-                Toast.makeText(getApplicationContext(), "Already in group " + temp.get(0),
+                Toast.makeText(getApplicationContext(), "Already in group " + group,
                         Toast.LENGTH_LONG).show();
             }
         //}

@@ -81,7 +81,8 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
             getLocalDB();
 
             //Push the local db to the internet
-            pushDB();
+            String pushResult = pushDB();
+            Log.v("update group", "" + pushResult);
         }
         return "";
     }

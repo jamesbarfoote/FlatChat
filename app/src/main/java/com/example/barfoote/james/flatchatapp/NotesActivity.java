@@ -59,7 +59,7 @@ public class NotesActivity extends ListActivity {
             }
         });
 
-        displayNotesLocal();
+      //  displayNotesLocal();
     }
 
     //METHOD WHICH WILL HANDLE DYNAMIC INSERTION
