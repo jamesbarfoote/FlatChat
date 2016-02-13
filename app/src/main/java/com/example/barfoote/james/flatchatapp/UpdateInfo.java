@@ -3,6 +3,7 @@ package com.example.barfoote.james.flatchatapp;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
@@ -42,6 +43,7 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
     private String todoList;
     private String ownerID;
     private int group_id;
+    private String result;
 
     DBHelper dbHelper= new DBHelper(getmContext());
 
@@ -68,27 +70,32 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
         if(whatToDo == 1)//call came from NotesActivity and we only want to get the data
         {
             //First pull down the latest version from the net
-            String retrieved = pullDownDB();
+            this.result = pullDownDB();
 
             //process that data
             //Add that data to the local db fields
-            processInternetDB(retrieved);
+            processInternetDB(this.result);
 
         }
         else if(whatToDo == 2)//call came from NotesActivity and we only want to push the data
         {
             //Get the local db
-            getLocalDB();
+            //getLocalDB();
+            this.groupData = this.newData;
 
             //Push the local db to the internet
-            String pushResult = pushDB();
-            Log.v("update group", "" + pushResult);
+            this.result = pushDB();
+            Toast.makeText((NotesActivity)mContext, "res of push " + this.result,
+                    Toast.LENGTH_LONG).show();
         }
         return "";
     }
 
     @Override
-    protected void onPostExecute(String result){
+    protected void onPostExecute(String res){
+        NotesActivity n = (NotesActivity)mContext;
+        n.onPost(this.result);
+
 
     }
     
@@ -109,15 +116,15 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
         return false;
     }
 
-    private boolean getLocalDB()
-    {
-        if(dbHelper.getGroupData() != null)
-        {
-            this.groupData = dbHelper.getGroupData();
-            return true;
-        }
-        return false;
-    }
+//    private boolean getLocalDB()
+//    {
+//        if(dbHelper.getGroupData() != null)
+//        {
+//            this.groupData = dbHelper.getGroupData();
+//            return true;
+//        }
+//        return false;
+//    }
 
     private String pullDownDB()//get group from internet
     {
@@ -147,6 +154,10 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
             in.close();
             Log.d("Result of getting group", sb.toString());
             response.body().close();
+
+            NotesActivity n = new NotesActivity();
+            n.onPost(sb.toString());
+
             return sb.toString();
         }
         catch(Exception e){
@@ -186,6 +197,10 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
             in.close();
             Log.d("Result updating group", sb.toString());
             response.body().close();
+
+            NotesActivity n = (NotesActivity)mContext;
+            n.onPost(sb.toString());
+
             return sb.toString();
         }
         catch(Exception e){

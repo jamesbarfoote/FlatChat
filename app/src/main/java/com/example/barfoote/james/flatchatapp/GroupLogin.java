@@ -122,6 +122,17 @@ public class GroupLogin extends AppCompatActivity {
                     Log.v("SQLite", "Inserting new group");
                     dbHelper.insertGroup(this.group_id, this.groupName, this.shoppingList, this.calendar, this.money, this.todoList, this.ownerID);
 
+
+                    if(dbHelper.getGroupData() != null)
+                    {
+
+                        ArrayList<String> d = dbHelper.getGroupData();
+                        for(String n: d)
+                        {
+                            Log.v("Group data", "data " + n);
+                        }
+                    }
+
                 }
 
                // dbHelper.insertGroup(this.group_id, groupNameIs, this.shoppingList, this.calendar, this.money, this.todoList, this.ownerID);
@@ -177,6 +188,8 @@ public class GroupLogin extends AppCompatActivity {
         Log.d("owner id","" + ownerID);
 
         //add this data to the local sql database
+
+
 
 
     }

@@ -20,7 +20,7 @@ if ($result->num_rows > 0) {
         echo "successL," . $row["User_ID"].
 		"," . $row["email"].
 		"," . $row["pic"].
-		"," . $row["FlatGroup_Name"]."<br>";
+		"," . $row["FlatGroup_Name"];
     }
 } else {
     echo "0 results";

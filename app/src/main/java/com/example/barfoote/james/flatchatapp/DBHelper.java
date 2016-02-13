@@ -121,11 +121,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public String getEmail()
     {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM " + FLATGROUP_TABLE_NAME;
+        String query = "SELECT * FROM " + USER_TABLE_NAME;
         Cursor  cursor = db.rawQuery(query,null);
         if (cursor.moveToFirst()) {
             Log.d("in if", "");
-            return cursor.getString(cursor.getColumnIndex("todoList"));
+            return cursor.getString(cursor.getColumnIndex("email"));
 
         }
         return "";

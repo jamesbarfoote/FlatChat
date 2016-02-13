@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
              //   Log.v("Group name is ",temp.get(0).toString());
         //if(temp.size() < 0) {
         String group = dbHelper.getGroup();
-            if (group.isEmpty()) {
+            if (!group.isEmpty()) {
                 Intent loggroup = new Intent(this, GroupLogin.class);
                 startActivity(loggroup);
             } else {

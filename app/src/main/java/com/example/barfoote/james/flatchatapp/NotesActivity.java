@@ -35,6 +35,7 @@ public class NotesActivity extends ListActivity {
 
     DBHelper dbHelper= new DBHelper(this);
     UpdateInfo updater;
+    String res = "";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +60,7 @@ public class NotesActivity extends ListActivity {
             }
         });
 
-      //  displayNotesLocal();
+        displayNotesLocal();
     }
 
     //METHOD WHICH WILL HANDLE DYNAMIC INSERTION
@@ -70,24 +71,26 @@ public class NotesActivity extends ListActivity {
         adapter.notifyDataSetChanged();
         //call sql and add into the notes column of the group
 
-//       ArrayList<String> stuff = dbHelper.getGroupData();
-//        for(String n: stuff)
-//        {
-//            Log.v("Life", "" + n);
-//        }
+       ArrayList<String> stuff = dbHelper.getGroupData();
+        for(String n: stuff)
+        {
+            Log.v("Life", "" + n);
+        }
 
         //get latest version from the internet
-        updater = new UpdateInfo(this, null, 1);
+        updater = new UpdateInfo(this, stuff, 1);
+        updater.execute();
         displayNotesLocal();
 
         //update local db
         String sList = listToString(listItems);
         dbHelper.updateNotes(sList);
-        Log.v("Updated list", "notes " + sList);
+//        Log.v("Updated list", "notes " + sList);
 
         //update internet table
         updater = new UpdateInfo(this, null, 2);
-
+        //updater.execute();
+        Log.v("Resulting", "results "+res);
 
     }
 
@@ -123,5 +126,11 @@ public class NotesActivity extends ListActivity {
         }
 
         return parsed;
+    }
+
+    public void onPost(String s)
+    {
+        this.res = s;
+        Log.v("Resulting res", "results " + s);
     }
 }
