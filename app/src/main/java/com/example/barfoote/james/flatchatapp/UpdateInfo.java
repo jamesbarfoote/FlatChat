@@ -150,7 +150,7 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
             String line="";
 
             while ((line = in.readLine()) != null) {
-
+            Log.d("Line", "Line " + line);
                 sb.append(line);
                 break;
             }
