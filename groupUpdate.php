@@ -20,7 +20,7 @@ define('DB','u997523806_db');
    $t6 = $OWNER_ID;
 
   # $sql = "UPDATE FlatGroups ". "SET SHOPPINGLIST = $SHOPPINGLIST,  CALENDAR = $CALENDAR, MONEY = $MONEY, TODO = $TODO, OWNER_ID = $OWNER_ID". "WHERE GROUP_NAME = $GROUP_NAME" ;
-   $sql = "UPDATE FlatGroups ". "SET SHOPPINGLIST = $t2,  CALENDAR = $t3, MONEY = $t4, TODO = $t5, OWNER_ID = $t6". "WHERE GROUP_NAME = $t1" ;
+  $sql = "UPDATE FlatGroups ". "SET SHOPPINGLIST = '$t2',  CALENDAR = '$t3', MONEY = '$t4', TODO = '$t5', OWNER_ID = '$t6'". "WHERE GROUP_NAME = '$t1'" ;
 
   if(mysqli_query($con,$sql)){
     echo 'successGU';

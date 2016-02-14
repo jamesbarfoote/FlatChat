@@ -72,25 +72,28 @@ public class NotesActivity extends ListActivity {
         //call sql and add into the notes column of the group
 
        ArrayList<String> stuff = dbHelper.getGroupData();
-        for(String n: stuff)
-        {
-            Log.v("Life", "" + n);
-        }
+//        for(String n: stuff)
+//        {
+//            Log.v("Life", "" + n);
+//        }
 
         //get latest version from the internet
         //updater = new UpdateInfo(this, stuff, 1);
         String groupName = dbHelper.getGroup();
         new UpdateInfo(this,stuff,1).execute(groupName);
-        //updater.execute();
-//        displayNotesLocal();
+        displayNotesLocal();
 //
 //        //update local db
-//        String sList = listToString(listItems);
-//        dbHelper.updateNotes(sList);
-////        Log.v("Updated list", "notes " + sList);
+        String sList = listToString(listItems);
+        dbHelper.updateNotes(sList);
+        //displayNotesLocal();
+        Log.v("Updated list", "notes " + sList);
 //
 //        //update internet table
 //        updater = new UpdateInfo(this, null, 2);
+        stuff = dbHelper.getGroupData();
+        new UpdateInfo(this,stuff,2).execute(groupName);
+
 //        //updater.execute();
 //        Log.v("Resulting", "results "+res);
 

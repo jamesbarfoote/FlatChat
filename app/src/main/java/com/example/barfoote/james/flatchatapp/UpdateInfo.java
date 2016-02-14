@@ -76,17 +76,17 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
            // processInternetDB(this.result);
 
         }
-//        else if(whatToDo == 2)//call came from NotesActivity and we only want to push the data
-//        {
-//            //Get the local db
-//            //getLocalDB();
-//            this.groupData = this.newData;
-//
-//            //Push the local db to the internet
-//            this.result = pushDB();
-//
-//            return this.result;
-//        }
+        else if(whatToDo == 2)//call came from NotesActivity and we only want to push the data
+        {
+            //Get the local db
+            //getLocalDB();
+            this.groupData = this.newData;
+
+            //Push the local db to the internet
+            this.result = pushDB();
+
+            return this.result;
+        }
         return "";
     }
 
@@ -115,7 +115,15 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
 
         if (seperatedD.get(0).equals("successGG")) {
             parseLogin(seperatedD);
-            dbHelper.updateGroup(this.group_id, this.group_name, this.shoppingList, this.calendar, this.money, this.todoList, this.ownerID);
+            //dbHelper.updateNotes(this.todoList);
+            dbHelper.updateGroup(this.group_id, this.group_name, this.shoppingList+"~avo", this.calendar, this.money, this.todoList, this.ownerID);
+
+
+            ArrayList<String> stuff = dbHelper.getGroupData();
+            for(String n: stuff)
+            {
+                Log.v("Life", "" + n);
+            }
 
             return true;
         }

@@ -201,7 +201,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(FLATGROUP_COLUMN_TODO_LIST, todoList);
         contentValues.put(FLATGROUP_COLUMN_OWNER_ID, ownerID);
 
-        db.update(FLATGROUP_TABLE_NAME, contentValues, FLATGROUP_COLUMN_ID + " = ? ", new String[]{Integer.toString(id)});
+        db.update(FLATGROUP_TABLE_NAME, contentValues, FLATGROUP_COLUMN_ID + " = ? ", new String[]{Integer.toString(1)});
         return true;
     }
 
