@@ -3,7 +3,6 @@ package com.example.barfoote.james.flatchatapp;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
@@ -13,7 +12,6 @@ import com.squareup.okhttp.Response;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -45,9 +43,6 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
     private int group_id;
     private String result;
 
-    DBHelper dbHelper= new DBHelper(getmContext());
-
-
     //newData is the data the user wants to add to the internet db
     //method is the method that the update request came from
     public UpdateInfo(Context c, ArrayList<String> newData, int method)
@@ -69,38 +64,48 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
     protected String doInBackground(String... arg0) {
         if(whatToDo == 1)//call came from NotesActivity and we only want to get the data
         {
+            this.group_name = (String)arg0[0];
+
             //First pull down the latest version from the net
-            this.result = pullDownDB();
+            String r = pullDownDB();
+            this.result = r;
+            return r;
 
             //process that data
             //Add that data to the local db fields
-            processInternetDB(this.result);
+           // processInternetDB(this.result);
 
         }
-        else if(whatToDo == 2)//call came from NotesActivity and we only want to push the data
-        {
-            //Get the local db
-            //getLocalDB();
-            this.groupData = this.newData;
-
-            //Push the local db to the internet
-            this.result = pushDB();
-            Toast.makeText((NotesActivity)mContext, "res of push " + this.result,
-                    Toast.LENGTH_LONG).show();
-        }
+//        else if(whatToDo == 2)//call came from NotesActivity and we only want to push the data
+//        {
+//            //Get the local db
+//            //getLocalDB();
+//            this.groupData = this.newData;
+//
+//            //Push the local db to the internet
+//            this.result = pushDB();
+//
+//            return this.result;
+//        }
         return "";
     }
 
     @Override
     protected void onPostExecute(String res){
         NotesActivity n = (NotesActivity)mContext;
-        n.onPost(this.result);
+        n.onPost(res);
+
+        if(whatToDo == 1)
+        {
+            DBHelper dbhelper = new DBHelper(mContext);
+            processInternetDB(res, dbhelper);
+        }
 
 
     }
     
 
-    public boolean processInternetDB(String data) //Pull the string appart and put the values into their corresponding db column
+    public boolean processInternetDB(String data, DBHelper dbHelper) //Pull the string appart and put the values into their corresponding db column
     {
         //Split the data and put it into an array
         ArrayList<String> seperatedD = new ArrayList<>();
@@ -129,8 +134,6 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
     private String pullDownDB()//get group from internet
     {
         try{
-            Log.d("In get group", "");
-            this.group_name = dbHelper.getGroup();
             OkHttpClient client = new OkHttpClient();
             RequestBody formBody = new FormEncodingBuilder()
                     .add("GROUP_NAME", this.group_name)
@@ -152,11 +155,8 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
                 break;
             }
             in.close();
-            Log.d("Result of getting group", sb.toString());
+            Log.d("Result of get group1", sb.toString());
             response.body().close();
-
-            NotesActivity n = new NotesActivity();
-            n.onPost(sb.toString());
 
             return sb.toString();
         }
@@ -197,9 +197,6 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
             in.close();
             Log.d("Result updating group", sb.toString());
             response.body().close();
-
-            NotesActivity n = (NotesActivity)mContext;
-            n.onPost(sb.toString());
 
             return sb.toString();
         }

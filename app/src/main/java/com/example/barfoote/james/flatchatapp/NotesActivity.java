@@ -78,19 +78,21 @@ public class NotesActivity extends ListActivity {
         }
 
         //get latest version from the internet
-        updater = new UpdateInfo(this, stuff, 1);
-        updater.execute();
-        displayNotesLocal();
-
-        //update local db
-        String sList = listToString(listItems);
-        dbHelper.updateNotes(sList);
-//        Log.v("Updated list", "notes " + sList);
-
-        //update internet table
-        updater = new UpdateInfo(this, null, 2);
+        //updater = new UpdateInfo(this, stuff, 1);
+        String groupName = dbHelper.getGroup();
+        new UpdateInfo(this,stuff,1).execute(groupName);
         //updater.execute();
-        Log.v("Resulting", "results "+res);
+//        displayNotesLocal();
+//
+//        //update local db
+//        String sList = listToString(listItems);
+//        dbHelper.updateNotes(sList);
+////        Log.v("Updated list", "notes " + sList);
+//
+//        //update internet table
+//        updater = new UpdateInfo(this, null, 2);
+//        //updater.execute();
+//        Log.v("Resulting", "results "+res);
 
     }
 
