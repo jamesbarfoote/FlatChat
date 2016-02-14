@@ -93,13 +93,15 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
     @Override
     protected void onPostExecute(String res){
         NotesActivity n = (NotesActivity)mContext;
-        n.onPost(res);
+        Boolean success = false;
 
         if(whatToDo == 1)
         {
             DBHelper dbhelper = new DBHelper(mContext);
-            processInternetDB(res, dbhelper);
+            success = processInternetDB(res, dbhelper);
         }
+
+        n.onPost(res + " " + success);
 
 
     }
@@ -111,7 +113,7 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
         ArrayList<String> seperatedD = new ArrayList<>();
         seperatedD.addAll(Arrays.asList(data.split(",")));
 
-        if (seperatedD.get(0).equals("  successGG")) {
+        if (seperatedD.get(0).equals("successGG")) {
             parseLogin(seperatedD);
             dbHelper.updateGroup(this.group_id, this.group_name, this.shoppingList, this.calendar, this.money, this.todoList, this.ownerID);
 
