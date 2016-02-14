@@ -116,7 +116,8 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
         if (seperatedD.get(0).equals("successGG")) {
             parseLogin(seperatedD);
             //dbHelper.updateNotes(this.todoList);
-            dbHelper.updateGroup(this.group_id, this.group_name, this.shoppingList+"~avo", this.calendar, this.money, this.todoList, this.ownerID);
+          //  compareLists();
+            dbHelper.updateGroup(this.group_id, this.group_name, this.shoppingList, this.calendar, this.money, this.todoList, this.ownerID);
 
 
             ArrayList<String> stuff = dbHelper.getGroupData();
@@ -212,6 +213,14 @@ public class UpdateInfo extends AsyncTask<String,Void,String> {
         }
         catch(Exception e){
             return new String("Exception: " + e.getMessage());
+        }
+    }
+
+    public void compareLists()
+    {
+        if(this.todoList.equals(this.newData.get(6)))//Internet list and local list are the same
+        {
+
         }
     }
 

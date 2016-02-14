@@ -16,6 +16,8 @@ import android.widget.TextView;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Jam on 8/06/2015.
@@ -65,10 +67,7 @@ public class NotesActivity extends ListActivity {
 
     //METHOD WHICH WILL HANDLE DYNAMIC INSERTION
     public void addItems(View v) {
-        String text = editText.getText().toString();
-        editText.setText("");
-        listItems.add(text);
-        adapter.notifyDataSetChanged();
+
         //call sql and add into the notes column of the group
 
        ArrayList<String> stuff = dbHelper.getGroupData();
@@ -78,25 +77,23 @@ public class NotesActivity extends ListActivity {
 //        }
 
         //get latest version from the internet
-        //updater = new UpdateInfo(this, stuff, 1);
         String groupName = dbHelper.getGroup();
         new UpdateInfo(this,stuff,1).execute(groupName);
         displayNotesLocal();
+
+        String text = editText.getText().toString();
+        editText.setText("");
+        listItems.add(text);
+        adapter.notifyDataSetChanged();
 //
 //        //update local db
         String sList = listToString(listItems);
         dbHelper.updateNotes(sList);
-        //displayNotesLocal();
         Log.v("Updated list", "notes " + sList);
-//
+
 //        //update internet table
-//        updater = new UpdateInfo(this, null, 2);
         stuff = dbHelper.getGroupData();
         new UpdateInfo(this,stuff,2).execute(groupName);
-
-//        //updater.execute();
-//        Log.v("Resulting", "results "+res);
-
     }
 
     public void displayNotesLocal()
@@ -112,13 +109,23 @@ public class NotesActivity extends ListActivity {
 
     public String listToString(ArrayList<String> items)
     {
+        ArrayList<String> noDups = removeDuplicates(items);
         String allItems = "";
-        for(String n: items)
+        for(String n: noDups)
         {
-            allItems = allItems + n  + "~";
+            allItems = allItems + n + "~";
         }
 
         return allItems;
+    }
+
+    public ArrayList<String> removeDuplicates(ArrayList<String> items)
+    {
+        ArrayList<String> noDups = new ArrayList<>();
+        Set<String> hs = new HashSet<>();
+        hs.addAll(items);
+        noDups.addAll(hs);
+        return noDups;
     }
 
     public ArrayList<String> parseNotes(String notes)
