@@ -12,20 +12,9 @@ public class NotesActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notes);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        /**
-         * Adding our layout to parent class frame layout.
-         */
-        getLayoutInflater().inflate(R.layout.activity_main, navigationView);
-
-        /**
-         * Setting title and itemChecked
-         */
-//        mDrawerList.setItemChecked(position, true);
-//        setTitle(listArray[position]);
+//        setContentView(R.layout.activity_notes);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
     }
 
 }
