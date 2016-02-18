@@ -77,16 +77,16 @@ public class MainActivity extends AppCompatActivity
             Intent NotesAct = new Intent(this, NotesActivity.class);
             startActivity(NotesAct);
         } else if (id == R.id.nav_gallery) {
-            Intent NotesAct = new Intent(this, MoneyActivity.class);
-            startActivity(NotesAct);
+            Intent MoneyAct = new Intent(this, MoneyActivity.class);
+            startActivity(MoneyAct);
 
         } else if (id == R.id.nav_slideshow) {
-            Intent NotesAct = new Intent(this, ShoppingActivity.class);
-            startActivity(NotesAct);
+            Intent ShoppingAct = new Intent(this, ShoppingActivity.class);
+            startActivity(ShoppingAct);
 
         } else if (id == R.id.nav_manage) {
-            Intent NotesAct = new Intent(this, CalendarActivity.class);
-            startActivity(NotesAct);
+            Intent CalendarAct = new Intent(this, CalendarActivity.class);
+            startActivity(CalendarAct);
 
         } else if (id == R.id.nav_share) {
 

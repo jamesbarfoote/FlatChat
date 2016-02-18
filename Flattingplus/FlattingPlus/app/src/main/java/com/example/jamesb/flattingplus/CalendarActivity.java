@@ -1,18 +1,19 @@
 package com.example.jamesb.flattingplus;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
+
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 public class CalendarActivity extends MainActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_calendar);
+        setContentView(R.layout.activity_main);
+
+        //setContentView(R.layout.activity_calendar);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 //
@@ -24,6 +25,23 @@ public class CalendarActivity extends MainActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
+
+        //MaterialCalendarView.getSelectedDates();
+//        FragmentManager fragmentManager = getFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//
+//        CalendarActivity fragment = new CalendarActivity();
+//        fragmentTransaction.add(R.id.fragment_container, fragment);
+//        fragmentTransaction.commit();
     }
 
 }
+
+//public class Cal extends MainActivity {
+//
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_calendar); //layout for 2nd activity
+//    }
+//}
